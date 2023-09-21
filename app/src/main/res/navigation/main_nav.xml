@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.itechcom.expensestracker.presenter.fragment.HomeFragment"
+        tools:layout="@layout/fragment_home"
+        android:label="HomeFragment" >
+
+        <action
+            android:id="@+id/action_toAllPlans"
+            app:destination="@id/fragmentAllPlans"/>
+        <action
+            android:id="@+id/actionToViewPlanFragment"
+            app:destination="@id/viewPlanFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentAllPlans"
+        android:name="com.itechcom.expensestracker.presenter.fragment.AllPlansFragment"
+        tools:layout="@layout/fragment_all_plans"
+        android:label="FragmentAllPlans" >
+        <action
+            android:id="@+id/action_fragmentAllPlans_to_viewPlanFragment"
+            app:destination="@id/viewPlanFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/viewPlanFragment"
+        android:name="com.itechcom.expensestracker.presenter.fragment.ViewPlanFragment"
+        tools:layout="@layout/fragment_view_plan"
+        android:label="ViewPlanFragment" >
+        <action
+            android:id="@+id/actionToEditPlanFragment"
+            app:destination="@id/editPlanFragment" />
+        <action
+            android:id="@+id/actionToEditIncome"
+            app:destination="@id/editIncomeFragment2" />
+        <action
+            android:id="@+id/actionToEditExpenses"
+            app:destination="@id/editExpensesFragment2" />
+        <action
+            android:id="@+id/actionToAddExpensesFragment"
+            app:destination="@id/addExpensesFragment" />
+        <action
+            android:id="@+id/actionToAddIncomeFragment"
+            app:destination="@id/addIncomeFragment" />
+        <action
+            android:id="@+id/action_viewPlanFragment_to_allExpensesIncomeFragment2"
+            app:destination="@id/allExpensesIncomeFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/editPlanFragment"
+        android:name="com.itechcom.expensestracker.presenter.fragment.EditPlanFragment"
+        tools:layout="@layout/fragment_edit_plan"
+        android:label="EditPlanFragment" />
+    <fragment
+        android:id="@+id/editExpensesFragment2"
+        android:name="com.itechcom.expensestracker.presenter.fragment.EditExpensesFragment"
+        tools:layout="@layout/fragment_edit_expenses"
+        android:label="EditExpensesFragment" />
+    <fragment
+        android:id="@+id/editIncomeFragment2"
+        android:name="com.itechcom.expensestracker.presenter.fragment.EditIncomeFragment"
+        tools:layout="@layout/fragment_edit_income"
+        android:label="EditIncomeFragment" />
+    <fragment
+        android:id="@+id/addExpensesFragment"
+        android:name="com.itechcom.expensestracker.presenter.fragment.AddExpensesFragment"
+        tools:layout="@layout/fragment_add_expenses"
+        android:label="AddExpensesFragment" />
+    <fragment
+        android:id="@+id/addIncomeFragment"
+        android:name="com.itechcom.expensestracker.presenter.fragment.AddIncomeFragment"
+        tools:layout="@layout/fragment_add_income"
+        android:label="AddIncomeFragment" />
+    <fragment
+        android:id="@+id/allExpensesIncomeFragment"
+        android:name="com.itechcom.expensestracker.presenter.fragment.AllExpensesIncomeFragment"
+        tools:layout="@layout/fragment_view_all_expense_income"
+        android:label="AllExpensesIncomeFragment" >
+        <action
+            android:id="@+id/action_allExpensesIncomeFragment_to_editExpensesFragment22"
+            app:destination="@id/editExpensesFragment2" />
+        <action
+            android:id="@+id/action_allExpensesIncomeFragment_to_editIncomeFragment22"
+            app:destination="@id/editIncomeFragment2" />
+    </fragment>
+
+
+</navigation>
