@@ -2,4 +2,5 @@
     <string name="app_name">My Expenses</string>
     <string name="sharedPrefName">LocalPref</string>
     <string name="splash_footer">Tracking Your Expenses, Empowering Your Financial Future</string>
+    <string name="serverId">357328283425-fusji4earq7a7mdrvgbdvc9649n17oc6.apps.googleusercontent.com</string>
 </resources>
