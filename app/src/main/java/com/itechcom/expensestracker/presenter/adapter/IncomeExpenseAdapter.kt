@@ -5,10 +5,9 @@ import android.view.ViewGroup
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.QuickViewHolder
 import com.itechcom.expensestracker.R
-import com.itechcom.expensestracker.data.room.IncomeEntity
 
-class IncomeExpenseAdapter : BaseQuickAdapter<IncomeEntity, QuickViewHolder>() {
-    override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: IncomeEntity?) {
+class IncomeExpenseAdapter : BaseQuickAdapter<String, QuickViewHolder>() {
+    override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: String?) {
     }
 
     override fun onCreateViewHolder(
@@ -19,7 +18,7 @@ class IncomeExpenseAdapter : BaseQuickAdapter<IncomeEntity, QuickViewHolder>() {
         return QuickViewHolder(R.layout.item_income_expenses, parent)
     }
 
-    override fun getItemCount(items: List<IncomeEntity>): Int {
+    override fun getItemCount(items: List<String>): Int {
         return 5
     }
 }

@@ -1,24 +1,24 @@
 package com.itechcom.expensestracker.presenter
 
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
-import com.itechcom.expensestracker.data.firebase.GoogleAuthClient
-import com.itechcom.expensestracker.data.firebase.SignInResults
-import com.itechcom.expensestracker.data.room.RoomDBManager
-import com.itechcom.expensestracker.data.sharedpref.SharedPrefManager
+import androidx.lifecycle.viewModelScope
+import com.itechcom.domain.model.SignInResults
+import com.itechcom.domain.usecase.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.single
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SingleViewModel @Inject constructor(
-    val roomDBManager: RoomDBManager,
-    val sharedPrefManager: SharedPrefManager,
-    val googleAuthClient: GoogleAuthClient
+    private val loginUseCase: LoginUseCase,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(SignInResults(data = null))
+    private val _state = MutableStateFlow(SignInResults())
     val state = _state.asStateFlow()
     private val _isLoggedIn = MutableStateFlow(false)
     val isLoggedIn = _isLoggedIn.asStateFlow()
@@ -26,21 +26,24 @@ class SingleViewModel @Inject constructor(
     val errorMsg = _errorMsg.asStateFlow()
 
     init {
-        googleStates()
+        viewModelScope.launch {
+            googleStates()
+        }
     }
 
-    suspend fun requestGoogleSignIn() =  googleAuthClient.signIn()
+
+    /** Google Login */
+    suspend fun requestGoogleSignIn() = loginUseCase.requestGoogleLogin()
     suspend fun getSignInWithIntent(intent : Intent){
-        val result = googleAuthClient.getSignInResultFromIntent(intent)
-        _state.value = result
+        loginUseCase.googleGetSignInWithIntent(intent).collect{
+            _state.value = it
+        }
     }
-    suspend fun googleSignOut() {
-        googleAuthClient.signOut()
-    }
+    suspend fun googleSignOut() = loginUseCase.googleSignOut()
 
-    fun isAlreadySignedIn() : Boolean {
+    suspend fun isAlreadySignedIn() : Boolean {
         val result = SignInResults(
-            data = googleAuthClient.getSignedInUser(),
+            data = loginUseCase.getSignedInUser().single(),
             errorMsg = null
         )
         if(result.data == null) return false
@@ -48,9 +51,15 @@ class SingleViewModel @Inject constructor(
         return true
     }
 
-    private fun googleStates(){
-        googleAuthClient.onAuthChange(_isLoggedIn)
-        googleAuthClient.addErrorMessageAlert(_errorMsg)
+    private suspend fun googleStates(){
+        loginUseCase.onAuthChange(_isLoggedIn)
+        loginUseCase.addErrorMessageAlert()
     }
+
+    /** Shared Preferences */
+
+    fun setPrefValue(key : String, type : Any) = loginUseCase.setPrefValue(key, type)
+    fun getPrefValue(key : String, type : Any) = loginUseCase.getPrefValue(key, type)
+
 
 }

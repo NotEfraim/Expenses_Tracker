@@ -4,8 +4,8 @@ import android.app.Activity
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.lifecycleScope
+import com.itechcom.domain.model.SignInResults
 import com.itechcom.expensestracker.base.BaseActivity
-import com.itechcom.expensestracker.data.firebase.SignInResults
 import com.itechcom.expensestracker.databinding.ActivityMainBinding
 import com.itechcom.expensestracker.presenter.SingleViewModel
 import com.itechcom.expensestracker.utils.extensions.collect
@@ -22,7 +22,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, SingleViewModel>(
     private var isUserSignedIn = false
 
     override fun SingleViewModel.initCall() {
-        isUserSignedIn = viewModel.isAlreadySignedIn()
+        lifecycleScope.launch {
+            isUserSignedIn = viewModel.isAlreadySignedIn()
+        }
     }
 
     override fun SingleViewModel.initObserver() {
@@ -38,7 +40,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, SingleViewModel>(
             lifecycleScope.launch {
                 viewModel.apply {
                     googleSignOut()
-                    googleAuthClient.getSignedInUser()
                 }
             }
         }
