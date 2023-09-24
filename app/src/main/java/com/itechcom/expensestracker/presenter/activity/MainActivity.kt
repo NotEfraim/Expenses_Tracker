@@ -73,7 +73,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, SingleViewModel>(
     private fun googleSignInFunc() = binding.apply {
         userName.setOnClickListener {
             lifecycleScope.launch {
-                if(isUserSignedIn) return@launch
                 val signInIntentSender = viewModel.requestGoogleSignIn()
                 signInLauncher.launch(IntentSenderRequest.Builder(signInIntentSender ?: return@launch).build())
             }

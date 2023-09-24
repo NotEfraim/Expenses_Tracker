@@ -24,15 +24,18 @@ class GoogleAuthClient @Inject constructor(
     private val auth = Firebase.auth
     private var errorMsg : MutableStateFlow<String>? = null
     suspend fun signIn() : IntentSender?{
-        val result = try {
-            oneTapSignClient.beginSignIn(buildSignInRequest()).await()
-        }catch (e : Exception){
-            validateError(e.message?:"")
-            e.printStackTrace()
-            if(e is CancellationException) throw e
-            null
+        if(auth.currentUser?.displayName == null){
+            val result = try {
+                oneTapSignClient.beginSignIn(buildSignInRequest()).await()
+            }catch (e : Exception){
+                validateError(e.message?:"")
+                e.printStackTrace()
+                if(e is CancellationException) throw e
+                null
+            }
+            return result?.pendingIntent?.intentSender
         }
-        return result?.pendingIntent?.intentSender
+       return null
     }
 
     private fun buildSignInRequest() : BeginSignInRequest{
