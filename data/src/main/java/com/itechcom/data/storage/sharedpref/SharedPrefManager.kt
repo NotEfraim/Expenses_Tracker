@@ -9,45 +9,16 @@ class SharedPrefManager @Inject constructor(
 
     private val sharedPrefManager = context.getSharedPreferences("LocalPref", Context.MODE_PRIVATE)
 
-    fun setValue(key: String, value: Any) {
-        when(value){
-            is String ->{
-                setString(key, value)
-            }
-            is Int -> {
-                setInt(key, value)
-            }
-            is Boolean -> {
-                setBoolean(key, value)
-            }
-        }
-    }
+    fun getString(key : String) = sharedPrefManager.getString(key, "")
 
-    fun getValue(key: String, type : Any) : Any? {
-        when(type){
-            is String ->{
-                return getString(key)
-            }
-            is Int -> {
-                return getInt(key)
-            }
-            is Boolean -> {
-                return getBoolean(key)
-            }
-        }
-        return null
-    }
+    fun setString(key : String, value : String) = sharedPrefManager.edit().putString(key, value).apply()
 
-    private fun getString(key : String) = sharedPrefManager.getString(key, "")
+    fun getBoolean(key: String, value : Boolean? = null) = sharedPrefManager.getBoolean(key, value?:false)
 
-    private fun setString(key : String, value : String) = sharedPrefManager.edit().putString(key, value).apply()
+    fun setBoolean(key : String, value : Boolean) = sharedPrefManager.edit().putBoolean(key, value).apply()
 
-    private fun getBoolean(key: String, value : Boolean? = null) = sharedPrefManager.getBoolean(key, value?:false)
+    fun getInt(key: String) = sharedPrefManager.getInt(key, 0)
 
-    private fun setBoolean(key : String, value : Boolean) = sharedPrefManager.edit().putBoolean(key, value).apply()
-
-    private fun getInt(key: String) = sharedPrefManager.getInt(key, 0)
-
-    private fun setInt(key : String, value: Int) = sharedPrefManager.edit().putInt(key, value).apply()
+    fun setInt(key : String, value: Int) = sharedPrefManager.edit().putInt(key, value).apply()
 }
 

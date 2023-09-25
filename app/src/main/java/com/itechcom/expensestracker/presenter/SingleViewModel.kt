@@ -57,9 +57,10 @@ class SingleViewModel @Inject constructor(
     }
 
     /** Shared Preferences */
-
-    fun setPrefValue(key : String, type : Any) = loginUseCase.setPrefValue(key, type)
-    fun getPrefValue(key : String, type : Any) = loginUseCase.getPrefValue(key, type)
+    fun sharedPrefSetBoolean(key: String, value : Boolean)
+    = loginUseCase.sharedPrefSetBoolean(key, value)
+    fun sharedPrefGetBoolean(key: String, defValue : Boolean)
+    = loginUseCase.sharedPrefGetBoolean(key, defValue)
 
 
 }

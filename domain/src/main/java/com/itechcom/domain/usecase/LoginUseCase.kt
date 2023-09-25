@@ -21,8 +21,9 @@ class LoginUseCase @Inject constructor(
 
     /** Shared Preferences */
 
-   fun setPrefValue(key : String, type : Any) = sharedPrefRepository.setValue(key, type)
-   fun getPrefValue(key : String, type : Any) = sharedPrefRepository.getValue(key, type)
+   fun sharedPrefGetBoolean(key : String, defValue : Boolean) = sharedPrefRepository.getBoolean(key, defValue)
+   fun sharedPrefSetBoolean(key : String, value : Boolean) =
+       sharedPrefRepository.setBoolean(key, value)
 
     /** Google Login */
     suspend fun requestGoogleLogin() = googleLoginRepository.requestLogin()

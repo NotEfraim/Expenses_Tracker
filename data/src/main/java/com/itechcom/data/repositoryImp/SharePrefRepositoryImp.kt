@@ -7,7 +7,16 @@ import javax.inject.Inject
 class SharePrefRepositoryImp @Inject constructor(
     private val sharedPrefManager: SharedPrefManager
 ) : SharedPrefRepository {
-    override fun setValue(key : String, any: Any) = sharedPrefManager.setValue(key, any)
+    override fun getString(key: String) = sharedPrefManager.getString(key)
 
-    override fun getValue(key : String, type : Any): Any? = sharedPrefManager.getValue(key, type)
+    override fun setString(key: String, value: String) = sharedPrefManager.setString(key, value)
+
+    override fun getBoolean(key: String, value: Boolean?) = sharedPrefManager.getBoolean(key, value)
+
+    override fun setBoolean(key: String, value: Boolean) = sharedPrefManager.setBoolean(key, value)
+
+    override fun getInt(key: String) = sharedPrefManager.getInt(key)
+
+    override fun setInt(key: String, value: Int) = sharedPrefManager.setInt(key, value)
+
 }

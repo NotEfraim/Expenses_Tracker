@@ -22,29 +22,25 @@ class SplashScreen : BaseActivity<ActivitySplashScreenBinding, SingleViewModel>(
     override fun ActivitySplashScreenBinding.initialize() {
         transparentStatusBar()
         lifecycleScope.launch {
-            delay(5000)
-            intentTo<MainActivity> {  }
-            finish()
-        }
-    }
+            viewModel.sharedPrefGetBoolean(
+                SharedPrefKey.isFreshInstall,
+                true
+            ).let { freshInstalled ->
 
-    // Todo sharedPref Implementation
-    fun mainLogic(){
-        viewModel.getPrefValue(SharedPrefKey.isFreshInstall, Boolean).let { pref ->
-            val isFreshInstall = pref as Boolean
-            if(isFreshInstall){
-                lifecycleScope.launch {
-                    viewModel.setPrefValue(SharedPrefKey.isFreshInstall, false)
-                    delay(5000)
+                if(freshInstalled){
+                    lifecycleScope.launch {
+                        viewModel.sharedPrefSetBoolean(SharedPrefKey.isFreshInstall, false)
+                        delay(5000)
+                        intentTo<MainActivity> {  }
+                        finish()
+                    }
+                }
+                else {
                     intentTo<MainActivity> {  }
                     finish()
                 }
-            }
-            else {
-                intentTo<MainActivity> {  }
-                finish()
+
             }
         }
     }
-
 }
