@@ -4,7 +4,8 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.lifecycleScope
 import com.itechcom.expensestracker.base.BaseActivity
 import com.itechcom.expensestracker.databinding.ActivitySplashScreenBinding
-import com.itechcom.expensestracker.presenter.SingleViewModel
+import com.itechcom.expensestracker.presenter.viewmodel.SingleViewModel
+import com.itechcom.expensestracker.presenter.viewmodel.SplashScreenViewModel
 import com.itechcom.expensestracker.utils.SharedPrefKey
 import com.itechcom.expensestracker.utils.extensions.intentTo
 import com.itechcom.expensestracker.utils.extensions.transparentStatusBar
@@ -14,9 +15,9 @@ import kotlinx.coroutines.launch
 
 @SuppressLint("CustomSplashScreen")
 @AndroidEntryPoint
-class SplashScreen : BaseActivity<ActivitySplashScreenBinding, SingleViewModel>(
+class SplashScreen : BaseActivity<ActivitySplashScreenBinding, SplashScreenViewModel>(
     ActivitySplashScreenBinding::inflate,
-    SingleViewModel::class
+    SplashScreenViewModel::class
 ) {
 
     override fun ActivitySplashScreenBinding.initialize() {

@@ -1,11 +1,12 @@
-package com.itechcom.expensestracker.presenter
+package com.itechcom.expensestracker.presenter.viewmodel
 
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.itechcom.domain.model.SignInResults
-import com.itechcom.domain.usecase.LoginUseCase
+import com.itechcom.domain.usecase.LoginWithBasicAuthUseCase
+import com.itechcom.domain.usecase.LoginWithFacebookUseCase
+import com.itechcom.domain.usecase.LoginWithGoogleUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,8 +15,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SingleViewModel @Inject constructor(
-    private val loginUseCase: LoginUseCase,
+class LoginRegisterViewModel @Inject constructor(
+    private val loginWithBasicAuthUseCase: LoginWithBasicAuthUseCase,
+    private val loginWithGoogleUseCase: LoginWithGoogleUseCase,
+    private val loginWithFacebookUseCase: LoginWithFacebookUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(SignInResults())
@@ -25,6 +28,7 @@ class SingleViewModel @Inject constructor(
     private val _errorMsg = MutableStateFlow("")
     val errorMsg = _errorMsg.asStateFlow()
 
+
     init {
         viewModelScope.launch {
             googleStates()
@@ -32,18 +36,19 @@ class SingleViewModel @Inject constructor(
     }
 
 
+
     /** Google Login */
-    suspend fun requestGoogleSignIn() = loginUseCase.requestGoogleLogin()
+    suspend fun requestGoogleSignIn() = loginWithGoogleUseCase.requestGoogleLogin()
     suspend fun getSignInWithIntent(intent : Intent){
-        loginUseCase.googleGetSignInWithIntent(intent).collect{
+        loginWithGoogleUseCase.googleGetSignInWithIntent(intent).collect{
             _state.value = it
         }
     }
-    suspend fun googleSignOut() = loginUseCase.googleSignOut()
+    suspend fun googleSignOut() = loginWithGoogleUseCase.googleSignOut()
 
     suspend fun isAlreadySignedIn() : Boolean {
         val result = SignInResults(
-            data = loginUseCase.getSignedInUser().single(),
+            data = loginWithGoogleUseCase.getSignedInUser().single(),
             errorMsg = null
         )
         if(result.data == null) return false
@@ -52,15 +57,7 @@ class SingleViewModel @Inject constructor(
     }
 
     private suspend fun googleStates(){
-        loginUseCase.onAuthChange(_isLoggedIn)
-        loginUseCase.addErrorMessageAlert()
+        loginWithGoogleUseCase.onAuthChange(_isLoggedIn)
+        loginWithGoogleUseCase.addErrorMessageAlert()
     }
-
-    /** Shared Preferences */
-    fun sharedPrefSetBoolean(key: String, value : Boolean)
-    = loginUseCase.sharedPrefSetBoolean(key, value)
-    fun sharedPrefGetBoolean(key: String, defValue : Boolean)
-    = loginUseCase.sharedPrefGetBoolean(key, defValue)
-
-
 }

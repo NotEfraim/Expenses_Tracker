@@ -1,15 +1,15 @@
-package com.itechcom.data.repositoryImp
+package com.itechcom.data.repositoryImp.firebase
 
 import android.content.Intent
 import com.itechcom.data.storage.firebase.auth.GoogleAuthClient
-import com.itechcom.data.repository.GoogleLoginRepository
+import com.itechcom.data.repository.firebase.GoogleAuthRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class GoogleLoginRepositoryImp @Inject constructor(
+class GoogleAuthRepositoryImp @Inject constructor(
     private val googleAuthClient: GoogleAuthClient
-) : GoogleLoginRepository {
+) : GoogleAuthRepository {
     override suspend fun requestLogin() = googleAuthClient.signIn()
 
     override suspend fun getSignInWithIntent(intent: Intent) = flow {

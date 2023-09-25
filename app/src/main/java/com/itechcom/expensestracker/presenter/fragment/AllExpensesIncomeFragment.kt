@@ -3,7 +3,7 @@ package com.itechcom.expensestracker.presenter.fragment
 import com.itechcom.expensestracker.R
 import com.itechcom.expensestracker.base.BaseFragment
 import com.itechcom.expensestracker.databinding.FragmentViewAllExpenseIncomeBinding
-import com.itechcom.expensestracker.presenter.SingleViewModel
+import com.itechcom.expensestracker.presenter.viewmodel.SingleViewModel
 import com.itechcom.expensestracker.presenter.adapter.IncomeExpenseAdapter
 import com.itechcom.expensestracker.utils.extensions.navigateTo
 

@@ -1,9 +1,8 @@
-package com.itechcom.data.repository
+package com.itechcom.data.repository.firebase
 
 import com.itechcom.data.model.DataUserModel
 import kotlinx.coroutines.flow.Flow
 
-interface FirebaseLoginRepository {
+interface FacebookAuthRepository {
     fun login() : Flow<DataUserModel>
-
 }

@@ -7,7 +7,8 @@ import androidx.lifecycle.lifecycleScope
 import com.itechcom.domain.model.SignInResults
 import com.itechcom.expensestracker.base.BaseActivity
 import com.itechcom.expensestracker.databinding.ActivityMainBinding
-import com.itechcom.expensestracker.presenter.SingleViewModel
+import com.itechcom.expensestracker.presenter.viewmodel.LoginRegisterViewModel
+import com.itechcom.expensestracker.presenter.viewmodel.SingleViewModel
 import com.itechcom.expensestracker.utils.extensions.collect
 import com.itechcom.expensestracker.utils.extensions.toastUtil
 import com.itechcom.expensestracker.utils.extensions.transparentStatusBar
@@ -15,19 +16,19 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity<ActivityMainBinding, SingleViewModel>(
+class MainActivity : BaseActivity<ActivityMainBinding, LoginRegisterViewModel>(
     ActivityMainBinding::inflate,
-    SingleViewModel::class)
+    LoginRegisterViewModel::class)
 {
     private var isUserSignedIn = false
 
-    override fun SingleViewModel.initCall() {
+    override fun LoginRegisterViewModel.initCall() {
         lifecycleScope.launch {
             isUserSignedIn = viewModel.isAlreadySignedIn()
         }
     }
 
-    override fun SingleViewModel.initObserver() {
+    override fun LoginRegisterViewModel.initObserver() {
         collect(state,::onLoginResult)
         collect(isLoggedIn, ::userState)
         collect(errorMsg, ::errorToaster)

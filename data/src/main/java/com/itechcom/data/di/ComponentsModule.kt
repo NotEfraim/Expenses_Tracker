@@ -2,6 +2,7 @@ package com.itechcom.data.di
 
 import android.content.Context
 import com.google.android.gms.auth.api.identity.Identity
+import com.itechcom.data.storage.firebase.auth.BasicAuthClient
 import com.itechcom.data.storage.firebase.auth.GoogleAuthClient
 import com.itechcom.data.storage.firebase.database.FirebaseDatabaseManager
 import com.itechcom.data.storage.room.RoomDBManager
@@ -34,5 +35,9 @@ class ComponentsModule {
     @Provides
     @Singleton
     fun providesFirebaseDatabaseManager() = FirebaseDatabaseManager()
+
+    @Provides
+    @Singleton
+    fun providesBaseAuthClient() = BasicAuthClient()
 
 }
