@@ -5,24 +5,25 @@ import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.lifecycleScope
 import com.itechcom.domain.model.SignInResults
-import com.itechcom.expensestracker.R
 import com.itechcom.expensestracker.base.BaseActivity
 import com.itechcom.expensestracker.databinding.ActivityLoginBinding
-import com.itechcom.expensestracker.presenter.viewmodel.LoginRegisterViewModel
+import com.itechcom.expensestracker.presenter.viewmodel.LoginViewModel
 import com.itechcom.expensestracker.utils.extensions.collect
+import com.itechcom.expensestracker.utils.extensions.hideLoadingDialog
 import com.itechcom.expensestracker.utils.extensions.intentTo
 import com.itechcom.expensestracker.utils.extensions.showLoadingDialog
 import com.itechcom.expensestracker.utils.extensions.toastUtil
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class LoginActivity : BaseActivity<ActivityLoginBinding, LoginRegisterViewModel>(
+class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(
     ActivityLoginBinding::inflate,
-    LoginRegisterViewModel::class
+    LoginViewModel::class
 ) {
 
-    override fun LoginRegisterViewModel.initObserver() {
+    override fun LoginViewModel.initObserver() {
         collect(state,::onLoginResult)
         collect(isLoggedIn, ::userState)
         collect(errorMsg, ::errorToaster)
@@ -37,11 +38,34 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginRegisterViewModel>
         loginGoogleBtn.setOnClickListener {
             googleSignInFunc()
         }
+        loginButton.setOnClickListener {
+            loggedInViaEmailAndPassword()
+        }
+
     }
+
+    private fun loggedInViaEmailAndPassword() = viewModel.apply {
+        binding.apply {
+            val email = email.getFieldText()
+            val password = password.getFieldText()
+            lifecycleScope.launch {
+                val result = loginViaEmailAndPassword(email, password)
+                if(!result.isSuccess){
+                    toastUtil("${result.errorMessage}")
+                }
+            }
+        }
+    }
+
+    /** Observe if user logged in **/
     private fun userState(isLoggedIn : Boolean){
         if(isLoggedIn){
-            intentTo<MainActivity> {  }
-            finish()
+            supportFragmentManager.showLoadingDialog()
+            lifecycleScope.launch {
+                delay(1500)
+                intentTo<MainActivity> {  }
+                finish()
+            }
         }
     }
 

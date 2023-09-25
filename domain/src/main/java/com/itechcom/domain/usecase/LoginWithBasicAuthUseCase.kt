@@ -1,6 +1,7 @@
 package com.itechcom.domain.usecase
 
 import com.itechcom.data.repository.firebase.BasicAuthRepository
+import com.itechcom.domain.mapper.mapToBasicAuthModel
 import javax.inject.Inject
 
 class LoginWithBasicAuthUseCase @Inject constructor(
@@ -8,11 +9,10 @@ class LoginWithBasicAuthUseCase @Inject constructor(
 ) {
 
     /** Firebase Basic Login */
-    suspend fun loginViaEmailAndPassword(email : String, password : String) : Pair<Boolean, String>  {
-        return basicAuthRepository.loginViaUserNameAndPass(email, password)
-    }
+    suspend fun loginViaEmailAndPassword(email : String, password : String) =
+        basicAuthRepository.loginViaUserNameAndPass(email, password).mapToBasicAuthModel()
 
-    suspend fun registerViaEmailAndPassword(email : String, password : String) : Pair<Boolean, String>  {
-        return basicAuthRepository.registerViaUserNameAndPass(email, password)
-    }
+    suspend fun sendPasswordResetEmail(email: String) =
+        basicAuthRepository.sendPasswordResetEmail(email).mapToBasicAuthModel()
+
 }

@@ -1,5 +1,6 @@
 package com.itechcom.data.repositoryImp.firebase
 
+import com.itechcom.data.model.DataBasicAuthModel
 import com.itechcom.data.repository.firebase.BasicAuthRepository
 import com.itechcom.data.storage.firebase.auth.BasicAuthClient
 import javax.inject.Inject
@@ -11,4 +12,8 @@ class BasicAuthRepositoryImp @Inject constructor(
         basicAuthClient.signInViaEmailAndPassword(email, password)
     override suspend fun registerViaUserNameAndPass(email : String, password : String) =
         basicAuthClient.registerVieEmailAndPassword(email, password)
+
+    override suspend fun sendPasswordResetEmail(email: String) =
+        basicAuthClient.sendPasswordResetEmail(email)
+
 }

@@ -33,17 +33,17 @@
 
         <activity android:name=".presenter.activity.MainActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustPan"
+            android:windowSoftInputMode="adjustPan"
             android:exported="true"/>
 
         <activity android:name=".presenter.activity.LoginActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustPan"
+            android:windowSoftInputMode="adjustPan"
             android:exported="true"/>
 
         <activity android:name=".presenter.activity.RegisterActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustPan"
+            android:windowSoftInputMode="adjustPan"
             android:exported="true"/>
 
     </application>

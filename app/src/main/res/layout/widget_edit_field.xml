@@ -29,6 +29,7 @@
         android:layout_marginStart="10dp"
         android:hint="Email"
         android:textSize="14sp"
+        android:singleLine="true"
         android:textColorHint="@color/color_3F6D83"
         android:background="@null"/>
 

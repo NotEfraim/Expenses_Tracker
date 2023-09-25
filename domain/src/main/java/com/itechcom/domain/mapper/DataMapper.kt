@@ -1,7 +1,9 @@
 package com.itechcom.domain.mapper
 
+import com.itechcom.data.model.DataBasicAuthModel
 import com.itechcom.data.model.DataSignInResults
 import com.itechcom.data.model.DataUserData
+import com.itechcom.domain.model.BasicAuthModel
 import com.itechcom.domain.model.SignInResults
 import com.itechcom.domain.model.UserData
 import kotlinx.coroutines.flow.Flow
@@ -33,4 +35,8 @@ suspend fun Flow<DataSignInResults?>.signInResultsMap() = flow {
         }
     }
     emit(model)
+}
+
+fun DataBasicAuthModel.mapToBasicAuthModel() : BasicAuthModel{
+    return BasicAuthModel(isSuccess, errorMessage)
 }

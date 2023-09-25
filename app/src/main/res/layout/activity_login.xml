@@ -57,6 +57,7 @@
         app:layout_constraintTop_toBottomOf="@+id/createAccountBtn">
 
         <com.itechcom.expensestracker.presenter.widget.KEditText
+            android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -64,6 +65,7 @@
             app:startIcon="@mipmap/email_icon"/>
 
         <com.itechcom.expensestracker.presenter.widget.KEditText
+            android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -80,6 +82,7 @@
             android:textColor="@color/color_3F6D83"/>
 
         <TextView
+            android:id="@+id/loginButton"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="Login"
@@ -89,19 +92,10 @@
             android:gravity="center_horizontal"
             android:paddingVertical="8dp"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/color_3F6D83"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:text="Or"/>
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -117,7 +111,7 @@
                 android:gravity="center"
                 android:textStyle="bold"
                 android:layout_marginHorizontal="10dp"
-                android:text="Login with"/>
+                android:text="Or"/>
 
             <View
                 android:layout_width="30dp"
@@ -126,6 +120,17 @@
 
 
         </LinearLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_3F6D83"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="Login with"/>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"

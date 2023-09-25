@@ -57,6 +57,7 @@
         app:layout_constraintTop_toBottomOf="@+id/haveAnAccountBtn">
 
         <com.itechcom.expensestracker.presenter.widget.KEditText
+            android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -64,6 +65,7 @@
             app:startIcon="@mipmap/person_icon"/>
 
         <com.itechcom.expensestracker.presenter.widget.KEditText
+            android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -71,6 +73,7 @@
             app:startIcon="@mipmap/email_icon"/>
 
         <com.itechcom.expensestracker.presenter.widget.KEditText
+            android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -78,6 +81,7 @@
             app:startIcon="@mipmap/password_icon"/>
 
         <com.itechcom.expensestracker.presenter.widget.KEditText
+            android:id="@+id/confirmPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -85,6 +89,7 @@
             app:startIcon="@mipmap/password_icon"/>
 
         <TextView
+            android:id="@+id/registerBtn"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="Register"

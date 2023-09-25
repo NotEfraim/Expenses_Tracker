@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginRegisterViewModel @Inject constructor(
+class LoginViewModel @Inject constructor(
     private val loginWithBasicAuthUseCase: LoginWithBasicAuthUseCase,
     private val loginWithGoogleUseCase: LoginWithGoogleUseCase,
     private val loginWithFacebookUseCase: LoginWithFacebookUseCase,
@@ -51,6 +51,11 @@ class LoginRegisterViewModel @Inject constructor(
         loginWithGoogleUseCase.addErrorMessageAlert(_errorMsg)
     }
 
+    /** Login with Email and Password */
+
+    suspend fun loginViaEmailAndPassword(email : String, password : String) =
+        loginWithBasicAuthUseCase.loginViaEmailAndPassword(email, password)
+
     /** Login Util **/
 
     suspend fun signOut(action :() -> Unit) = loginUtilUseCase.sigOut { action.invoke() }
@@ -61,7 +66,8 @@ class LoginRegisterViewModel @Inject constructor(
         )
         if(result.data == null) return false
         _state.value = result
-        return true
+
+        return true // return true because when use basic auth it will have no data
     }
 
     private fun onAuthChange(){
