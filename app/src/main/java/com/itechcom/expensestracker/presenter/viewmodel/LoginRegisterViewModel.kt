@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.itechcom.domain.model.SignInResults
+import com.itechcom.domain.usecase.LoginUtilUseCase
 import com.itechcom.domain.usecase.LoginWithBasicAuthUseCase
 import com.itechcom.domain.usecase.LoginWithFacebookUseCase
 import com.itechcom.domain.usecase.LoginWithGoogleUseCase
@@ -18,7 +19,8 @@ import javax.inject.Inject
 class LoginRegisterViewModel @Inject constructor(
     private val loginWithBasicAuthUseCase: LoginWithBasicAuthUseCase,
     private val loginWithGoogleUseCase: LoginWithGoogleUseCase,
-    private val loginWithFacebookUseCase: LoginWithFacebookUseCase
+    private val loginWithFacebookUseCase: LoginWithFacebookUseCase,
+    private val loginUtilUseCase: LoginUtilUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(SignInResults())
@@ -31,10 +33,10 @@ class LoginRegisterViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            googleStates()
+            addGoogleErrorAlertFlow()
+            onAuthChange()
         }
     }
-
 
 
     /** Google Login */
@@ -44,11 +46,17 @@ class LoginRegisterViewModel @Inject constructor(
             _state.value = it
         }
     }
-    suspend fun googleSignOut() = loginWithGoogleUseCase.googleSignOut()
 
+    private suspend fun addGoogleErrorAlertFlow(){
+        loginWithGoogleUseCase.addErrorMessageAlert(_errorMsg)
+    }
+
+    /** Login Util **/
+
+    suspend fun signOut(action :() -> Unit) = loginUtilUseCase.sigOut { action.invoke() }
     suspend fun isAlreadySignedIn() : Boolean {
         val result = SignInResults(
-            data = loginWithGoogleUseCase.getSignedInUser().single(),
+            data = loginUtilUseCase.getLoggedInUser().single(),
             errorMsg = null
         )
         if(result.data == null) return false
@@ -56,8 +64,8 @@ class LoginRegisterViewModel @Inject constructor(
         return true
     }
 
-    private suspend fun googleStates(){
-        loginWithGoogleUseCase.onAuthChange(_isLoggedIn)
-        loginWithGoogleUseCase.addErrorMessageAlert()
+    private fun onAuthChange(){
+        loginUtilUseCase.onAuthChange(_isLoggedIn)
     }
+
 }

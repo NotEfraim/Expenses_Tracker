@@ -10,8 +10,5 @@ import kotlinx.coroutines.flow.MutableStateFlow
 interface GoogleAuthRepository {
     suspend fun requestLogin() : IntentSender?
     suspend fun getSignInWithIntent(intent : Intent) : Flow<DataSignInResults?>
-    suspend fun getSignedInUser() : Flow<DataUserData?>
-    suspend fun signOut()
-    suspend fun onAuthChange(state : MutableStateFlow<Boolean>)
-    suspend fun addErrorMessageAlert()
+    suspend fun addErrorMessageAlert(errorFlow : MutableStateFlow<String>)
 }

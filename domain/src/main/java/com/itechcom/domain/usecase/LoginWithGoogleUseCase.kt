@@ -19,12 +19,7 @@ class LoginWithGoogleUseCase @Inject constructor(
     suspend fun requestGoogleLogin() = googleLoginRepository.requestLogin()
     suspend fun googleGetSignInWithIntent(intent: Intent) =
         googleLoginRepository.getSignInWithIntent(intent).signInResultsMap()
-    suspend fun googleSignOut() = googleLoginRepository.signOut()
-    suspend fun getSignedInUser() = flow{
-        emit(googleLoginRepository.getSignedInUser().userDataMap())
-    }
-    suspend fun onAuthChange(state : MutableStateFlow<Boolean>) =
-        googleLoginRepository.onAuthChange(state)
-    suspend fun addErrorMessageAlert() = googleLoginRepository.addErrorMessageAlert()
+    suspend fun addErrorMessageAlert(errorFlow : MutableStateFlow<String>) =
+        googleLoginRepository.addErrorMessageAlert(errorFlow)
 
 }

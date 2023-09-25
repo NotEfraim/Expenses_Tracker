@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/login_bg">
+
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:src="@mipmap/rectangle_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/registerLottie"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent=".3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5"
+        app:layout_constraintWidth_percent=".8"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/register_lottie" />
+
+    <TextView
+        android:id="@+id/haveAnAccountBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Already have an account?"
+        android:textColor="@color/color_3F6D83"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/registerLottie"
+        app:layout_constraintTop_toBottomOf="@+id/registerLottie" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:background="@drawable/container_bg_white_70"
+        android:layout_marginVertical="10dp"
+        app:layout_constraintWidth_percent=".9"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:paddingHorizontal="10dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/haveAnAccountBtn">
+
+        <com.itechcom.expensestracker.presenter.widget.KEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            app:fieldHint="Name"
+            app:startIcon="@mipmap/person_icon"/>
+
+        <com.itechcom.expensestracker.presenter.widget.KEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:fieldHint="Email"
+            app:startIcon="@mipmap/email_icon"/>
+
+        <com.itechcom.expensestracker.presenter.widget.KEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:fieldHint="Password"
+            app:startIcon="@mipmap/password_icon"/>
+
+        <com.itechcom.expensestracker.presenter.widget.KEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:fieldHint="Confirm Password"
+            app:startIcon="@mipmap/password_icon"/>
+
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Register"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/white"
+            android:background="@drawable/blue_button_round"
+            android:gravity="center_horizontal"
+            android:paddingVertical="8dp"/>
+
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

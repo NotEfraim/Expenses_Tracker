@@ -4,12 +4,15 @@ import com.itechcom.data.repository.firebase.FacebookAuthRepository
 import com.itechcom.data.repository.firebase.GoogleAuthRepository
 import com.itechcom.data.repository.SharedPrefRepository
 import com.itechcom.data.repository.firebase.BasicAuthRepository
+import com.itechcom.data.repository.firebase.LoginUtilRepository
 import com.itechcom.data.repositoryImp.firebase.FacebookAuthRepositoryImp
 import com.itechcom.data.repositoryImp.firebase.GoogleAuthRepositoryImp
 import com.itechcom.data.repositoryImp.SharePrefRepositoryImp
 import com.itechcom.data.repositoryImp.firebase.BasicAuthRepositoryImp
+import com.itechcom.data.repositoryImp.firebase.LoginUtilRepositoryImp
 import com.itechcom.data.storage.firebase.auth.BasicAuthClient
 import com.itechcom.data.storage.firebase.auth.GoogleAuthClient
+import com.itechcom.data.storage.firebase.auth.LoginUtil
 import com.itechcom.data.storage.sharedpref.SharedPrefManager
 import dagger.Module
 import dagger.Provides
@@ -43,5 +46,11 @@ class RepositoryModule {
     @Singleton
     fun provideGenericAuthRepository(basicAuthClient: BasicAuthClient) : BasicAuthRepository {
         return BasicAuthRepositoryImp(basicAuthClient)
+    }
+
+    @Provides
+    @Singleton
+    fun providesLoginUtilRepository(loginUtil: LoginUtil) : LoginUtilRepository{
+        return LoginUtilRepositoryImp(loginUtil)
     }
 }

@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 
-suspend fun Flow<DataUserData?>.userDataMap() : UserData {
+suspend fun Flow<DataUserData?>.userDataMap() : Flow<UserData> = flow {
     val model = UserData()
     this@userDataMap.collect {
         it?.run {
@@ -17,7 +17,7 @@ suspend fun Flow<DataUserData?>.userDataMap() : UserData {
             model.profilePictureUrl = it.profilePictureUrl
         }
     }
-    return model
+    emit(model)
 }
 
 suspend fun Flow<DataSignInResults?>.signInResultsMap() = flow {

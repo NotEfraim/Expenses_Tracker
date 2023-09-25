@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="KEditText">
+        <attr name="startIcon" format="reference"/>
+        <attr name="fieldHint" format="string"/>
+    </declare-styleable>
+</resources>

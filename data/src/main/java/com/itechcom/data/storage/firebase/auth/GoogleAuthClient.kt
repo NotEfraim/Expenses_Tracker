@@ -84,35 +84,8 @@ class GoogleAuthClient @Inject constructor(
 
     }
 
-    fun getSignedInUser() : DataUserData? = auth.currentUser?.run {
-        DataUserData(
-            userId = uid,
-            username = displayName,
-            profilePictureUrl = photoUrl?.toString()
-        )
-    }
-
-    suspend fun signOut(){
-        try {
-            oneTapSignClient.signOut().await()
-            auth.signOut()
-        }catch (e : Exception){
-            validateError(e.message?:"")
-            if(e is CancellationException) throw e
-        }
-    }
-
-    fun onAuthChange(
-        state : MutableStateFlow<Boolean>
-        ){
-        auth.addAuthStateListener {
-            val user = it.currentUser
-            state.value = user?.isAnonymous == false
-        }
-    }
-
-    fun addErrorMessageAlert(){
-        this.errorMsg = errorMsg
+    fun addErrorMessageAlert(error: MutableStateFlow<String>){
+        this.errorMsg = error
     }
 
     private fun validateError(error : String){
