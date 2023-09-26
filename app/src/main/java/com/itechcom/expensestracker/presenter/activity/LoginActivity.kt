@@ -9,6 +9,7 @@ import com.itechcom.expensestracker.base.BaseActivity
 import com.itechcom.expensestracker.databinding.ActivityLoginBinding
 import com.itechcom.expensestracker.presenter.viewmodel.LoginViewModel
 import com.itechcom.expensestracker.utils.Constants
+import com.itechcom.expensestracker.utils.LoginType
 import com.itechcom.expensestracker.utils.extensions.collect
 import com.itechcom.expensestracker.utils.extensions.intentTo
 import com.itechcom.expensestracker.utils.extensions.toastUtil
@@ -53,7 +54,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(
                 if(!result.isSuccess){
                     toastUtil("${result.errorMessage}")
                 }else{
-                    saveEmailToPref(Constants.prefEmail, email)
+                    saveEmailToPref(Constants.PREF_EMAIL, email)
+                    saveLoginType(Constants.LOGIN_TYPE, LoginType.BASIC.name)
                 }
             }
         }
@@ -84,7 +86,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(
         showLoadingDialog()
         if(result.resultCode == Activity.RESULT_OK){
             lifecycleScope.launch {
-                viewModel.getSignInWithIntent(result.data?:return@launch)
+                result?.data?.let {
+                    viewModel.getSignInWithIntent(it)
+                    viewModel.saveLoginType(Constants.LOGIN_TYPE, LoginType.GOOGLE.name)
+                }
             }
         }
     }

@@ -58,6 +58,8 @@ class LoginViewModel @Inject constructor(
 
     fun saveEmailToPref(key : String, email : String) =
         loginWithBasicAuthUseCase.saveEmailToPref(key, email)
+    fun saveLoginType(key : String, loginType : String) =
+        loginWithBasicAuthUseCase.saveEmailToPref(key, loginType)
 
     /** Login Util **/
 

@@ -4,9 +4,12 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.itechcom.domain.model.database.UserEntity
 import com.itechcom.domain.usecase.MainUseCase
+import com.itechcom.expensestracker.utils.LoginType
+import com.itechcom.expensestracker.utils.LoginType.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,7 +20,22 @@ class MainViewModel @Inject constructor(
     private val _userName= MutableStateFlow("")
     val userName = _userName.asStateFlow()
 
-    suspend fun getBasicAuthUserName(email : String) {
+
+    suspend fun getSignInUser(loginType : String? ,email: String){
+        when(loginType){
+            BASIC.name -> {
+                getBasicAuthUserName(email)
+            }
+            GOOGLE.name -> {
+                getGoogleLoginUserName()
+            }
+            FACEBOOK.name -> {
+
+            }
+        }
+    }
+
+    private suspend fun getBasicAuthUserName(email : String) {
         mainUseCase.getBasicAuthUser(email).collect {
             val data = it.data
             Log.d("testMeXX", "${data}")
@@ -27,6 +45,13 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    private suspend fun getGoogleLoginUserName(){
+        mainUseCase.getLoggedInUser().collect{
+            _userName.value = it.username?:""
+        }
+    }
+
     suspend fun getSharedPrefEmail(key : String) = mainUseCase.getSavePrefEmail(key)
+    suspend fun getLoginType(key : String) = mainUseCase.getLoginType(key)
 
 }

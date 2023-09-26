@@ -18,5 +18,6 @@ class LoginWithBasicAuthUseCase @Inject constructor(
         basicAuthRepository.sendPasswordResetEmail(email).mapToFirebaseCallModel()
 
     fun saveEmailToPref(key : String, email: String) = sharedPrefManager.setString(key, email)
+    fun saveLoginType(key : String, loginType: String) = sharedPrefManager.setString(key, loginType)
 
 }

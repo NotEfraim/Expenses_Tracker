@@ -23,7 +23,7 @@ class SplashScreen : BaseActivity<ActivitySplashScreenBinding, SplashScreenViewM
         transparentStatusBar()
         lifecycleScope.launch {
             viewModel.sharedPrefGetBoolean(
-                Constants.isFreshInstall,
+                Constants.IS_FRESH_INSTALL,
                 true
             ).let { freshInstalled ->
                 if(freshInstalled) intentToLoginFirstTime()
@@ -34,7 +34,7 @@ class SplashScreen : BaseActivity<ActivitySplashScreenBinding, SplashScreenViewM
 
     private fun intentToLoginFirstTime(){
         lifecycleScope.launch {
-            viewModel.sharedPrefSetBoolean(Constants.isFreshInstall, false)
+            viewModel.sharedPrefSetBoolean(Constants.IS_FRESH_INSTALL, false)
             delay(5000)
             intentToLogin()
         }

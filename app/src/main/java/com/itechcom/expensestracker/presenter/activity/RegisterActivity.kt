@@ -6,7 +6,7 @@ import com.itechcom.expensestracker.base.BaseActivity
 import com.itechcom.expensestracker.databinding.ActivityRegisterBinding
 import com.itechcom.expensestracker.presenter.viewmodel.RegisterViewModel
 import com.itechcom.expensestracker.utils.Constants
-import com.itechcom.expensestracker.utils.extensions.intentTo
+import com.itechcom.expensestracker.utils.LoginType
 import com.itechcom.expensestracker.utils.extensions.toastUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -53,7 +53,8 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
                     userPassword = password
                 ))
                 if(res){
-                    saveEmailToPref(Constants.prefEmail, email)
+                    saveEmailToPref(Constants.PREF_EMAIL, email)
+                    saveLoginType(Constants.LOGIN_TYPE, LoginType.BASIC.name)
                     hideLoadingDialog()
                     delay(1000)
                     toastUtil("Registered Successfully")

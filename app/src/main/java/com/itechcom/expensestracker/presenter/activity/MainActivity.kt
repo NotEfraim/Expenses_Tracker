@@ -33,9 +33,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
 
     private fun getUserName() = viewModel.apply {
         lifecycleScope.launch {
-            val intentEmail = getSharedPrefEmail(Constants.prefEmail)
+            val intentEmail = getSharedPrefEmail(Constants.PREF_EMAIL)
+            val loginType = getLoginType(Constants.LOGIN_TYPE)
             if(intentEmail != null){
-                getBasicAuthUserName(intentEmail)
+                getSignInUser(loginType,intentEmail)
             }
         }
     }

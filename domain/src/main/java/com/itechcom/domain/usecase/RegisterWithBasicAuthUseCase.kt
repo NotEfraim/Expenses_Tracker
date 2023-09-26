@@ -14,5 +14,6 @@ class RegisterWithBasicAuthUseCase @Inject constructor(
         return basicAuthRepository.registerViaUserNameAndPass(email, password).mapToFirebaseCallModel()
     }
     fun saveEmailToPref(key : String, userId: String) = sharedPrefManager.setString(key, userId)
+    fun saveLoginType(key : String, userId: String) = sharedPrefManager.setString(key, userId)
 
 }
