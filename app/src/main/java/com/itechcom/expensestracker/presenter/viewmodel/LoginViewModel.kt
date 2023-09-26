@@ -20,7 +20,7 @@ class LoginViewModel @Inject constructor(
     private val loginWithBasicAuthUseCase: LoginWithBasicAuthUseCase,
     private val loginWithGoogleUseCase: LoginWithGoogleUseCase,
     private val loginWithFacebookUseCase: LoginWithFacebookUseCase,
-    private val loginUtilUseCase: LoginUtilUseCase
+    private val loginUtilUseCase: LoginUtilUseCase,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(SignInResults())
@@ -55,6 +55,9 @@ class LoginViewModel @Inject constructor(
 
     suspend fun loginViaEmailAndPassword(email : String, password : String) =
         loginWithBasicAuthUseCase.loginViaEmailAndPassword(email, password)
+
+    fun saveEmailToPref(key : String, email : String) =
+        loginWithBasicAuthUseCase.saveEmailToPref(key, email)
 
     /** Login Util **/
 

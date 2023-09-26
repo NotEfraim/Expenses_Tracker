@@ -18,4 +18,6 @@ class RegisterViewModel @Inject constructor(
 
     suspend fun addUser(userEntity: UserEntity) = databaseUseCase.addUser(userEntity)
 
+    fun saveEmailToPref(key : String, email: String) = registerUseCase.saveEmailToPref(key, email)
+
 }

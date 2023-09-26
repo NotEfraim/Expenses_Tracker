@@ -19,4 +19,7 @@ class DatabaseRepositoryImp @Inject constructor(
     override suspend fun addIncomeAndExpenses(incomeExpensesEntity: DataIncomeExpensesEntity)
     = firebaseDatabaseManager.addIncomeExpenses(incomeExpensesEntity)
 
+    override suspend fun getBasicAuthUser(email: String) =
+        firebaseDatabaseManager.getBasicAuthUser(email)
+
 }

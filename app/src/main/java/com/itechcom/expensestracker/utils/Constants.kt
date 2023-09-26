@@ -1,6 +1,6 @@
 package com.itechcom.expensestracker.utils
 
-object SharedPrefKey{
+object Constants{
     const val isFreshInstall = "isFreshInstall"
-    const val isUserLoggedIn = "isUserLoggedIn"
+    const val prefEmail = "prefEmail"
 }

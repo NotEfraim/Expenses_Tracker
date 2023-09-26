@@ -1,18 +1,19 @@
 package com.itechcom.expensestracker.presenter.fragment
 
+import android.util.Log
 import com.itechcom.expensestracker.R
 import com.itechcom.expensestracker.base.BaseFragment
 import com.itechcom.expensestracker.databinding.FragmentViewPlanBinding
-import com.itechcom.expensestracker.presenter.viewmodel.SingleViewModel
+import com.itechcom.expensestracker.presenter.viewmodel.MainViewModel
 import com.itechcom.expensestracker.presenter.adapter.IncomeExpenseAdapter
 import com.itechcom.expensestracker.utils.extensions.navigateTo
 
-class ViewPlanFragment : BaseFragment<FragmentViewPlanBinding, SingleViewModel>(
+class ViewPlanFragment : BaseFragment<FragmentViewPlanBinding, MainViewModel>(
     FragmentViewPlanBinding::inflate,
-    SingleViewModel::class) {
+    MainViewModel::class) {
 
     override fun FragmentViewPlanBinding.initialize() {
-
+        Log.d("fragmentState", "initialize: ")
         val incomeExpenseAdapter = IncomeExpenseAdapter()
         expensesIncomeRecycler.adapter = incomeExpenseAdapter
 

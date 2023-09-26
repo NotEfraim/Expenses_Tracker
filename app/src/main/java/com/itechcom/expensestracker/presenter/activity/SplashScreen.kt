@@ -5,7 +5,7 @@ import androidx.lifecycle.lifecycleScope
 import com.itechcom.expensestracker.base.BaseActivity
 import com.itechcom.expensestracker.databinding.ActivitySplashScreenBinding
 import com.itechcom.expensestracker.presenter.viewmodel.SplashScreenViewModel
-import com.itechcom.expensestracker.utils.SharedPrefKey
+import com.itechcom.expensestracker.utils.Constants
 import com.itechcom.expensestracker.utils.extensions.intentTo
 import com.itechcom.expensestracker.utils.extensions.transparentStatusBar
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +23,7 @@ class SplashScreen : BaseActivity<ActivitySplashScreenBinding, SplashScreenViewM
         transparentStatusBar()
         lifecycleScope.launch {
             viewModel.sharedPrefGetBoolean(
-                SharedPrefKey.isFreshInstall,
+                Constants.isFreshInstall,
                 true
             ).let { freshInstalled ->
                 if(freshInstalled) intentToLoginFirstTime()
@@ -34,7 +34,7 @@ class SplashScreen : BaseActivity<ActivitySplashScreenBinding, SplashScreenViewM
 
     private fun intentToLoginFirstTime(){
         lifecycleScope.launch {
-            viewModel.sharedPrefSetBoolean(SharedPrefKey.isFreshInstall, false)
+            viewModel.sharedPrefSetBoolean(Constants.isFreshInstall, false)
             delay(5000)
             intentToLogin()
         }

@@ -5,6 +5,7 @@ import com.itechcom.domain.model.database.UserEntity
 import com.itechcom.expensestracker.base.BaseActivity
 import com.itechcom.expensestracker.databinding.ActivityRegisterBinding
 import com.itechcom.expensestracker.presenter.viewmodel.RegisterViewModel
+import com.itechcom.expensestracker.utils.Constants
 import com.itechcom.expensestracker.utils.extensions.intentTo
 import com.itechcom.expensestracker.utils.extensions.toastUtil
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,9 +43,9 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
         }
     }
 
-    private fun authenticateUser(name : String, email : String, password : String){
+    private fun authenticateUser(name : String, email : String, password : String) = viewModel.apply {
         lifecycleScope.launch {
-            val registerResult = viewModel.registerWithEmailAndPassword(email, password)
+            val registerResult = registerWithEmailAndPassword(email, password)
             if(registerResult.isSuccess){
                 val res = saveToDatabase(UserEntity(
                     name = name,
@@ -52,6 +53,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
                     userPassword = password
                 ))
                 if(res){
+                    saveEmailToPref(Constants.prefEmail, email)
                     hideLoadingDialog()
                     delay(1000)
                     toastUtil("Registered Successfully")

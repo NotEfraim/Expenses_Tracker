@@ -1,14 +1,12 @@
 package com.itechcom.data.storage.firebase.database
 
 import android.util.Log
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.itechcom.data.model.DataFirebaseCallModel
 import com.itechcom.data.storage.firebase.database.entity.DataIncomeExpensesEntity
 import com.itechcom.data.storage.firebase.database.entity.DataPlanEntity
 import com.itechcom.data.storage.firebase.database.entity.DataUserEntity
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import java.util.concurrent.CancellationException
 
@@ -44,7 +42,6 @@ class FirebaseDatabaseManager {
             DataFirebaseCallModel(false, "${e.message}")
         }
     }
-
     suspend fun addIncomeExpenses(incomeExpensesEntity: DataIncomeExpensesEntity) : DataFirebaseCallModel {
         return try {
             incomeExpensesEntity.id = incomeExpensesTable.push().key
@@ -55,6 +52,28 @@ class FirebaseDatabaseManager {
         }catch (e : Exception){
             if (e is CancellationException) throw e
             DataFirebaseCallModel(false, "${e.message}")
+        }
+    }
+
+    suspend fun getBasicAuthUser(email : String) = flow {
+        try {
+
+            val query = usersTable.orderByChild("userName")
+                .equalTo(email)
+                .limitToFirst(1)
+                .get()
+                .await()
+
+            if(query.exists()){
+                val userResponse = query.children.first().getValue(DataUserEntity::class.java)
+                emit(DataFirebaseCallModel(true, userResponse, "" ))
+            }
+
+            else emit(DataFirebaseCallModel(false, "" ))
+
+        }catch (e : Exception){
+            if(e is CancellationException) throw e
+            emit(DataFirebaseCallModel(false, "${e.message}"))
         }
     }
 

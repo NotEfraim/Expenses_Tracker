@@ -8,6 +8,7 @@ import com.itechcom.domain.model.auth.SignInResults
 import com.itechcom.expensestracker.base.BaseActivity
 import com.itechcom.expensestracker.databinding.ActivityLoginBinding
 import com.itechcom.expensestracker.presenter.viewmodel.LoginViewModel
+import com.itechcom.expensestracker.utils.Constants
 import com.itechcom.expensestracker.utils.extensions.collect
 import com.itechcom.expensestracker.utils.extensions.intentTo
 import com.itechcom.expensestracker.utils.extensions.toastUtil
@@ -51,6 +52,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(
                 val result = loginViaEmailAndPassword(email, password)
                 if(!result.isSuccess){
                     toastUtil("${result.errorMessage}")
+                }else{
+                    saveEmailToPref(Constants.prefEmail, email)
                 }
             }
         }
