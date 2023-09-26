@@ -1,7 +1,7 @@
 package com.itechcom.expensestracker.presenter.activity
 
 import androidx.lifecycle.lifecycleScope
-import com.itechcom.domain.model.SignInResults
+import com.itechcom.domain.model.auth.SignInResults
 import com.itechcom.expensestracker.base.BaseActivity
 import com.itechcom.expensestracker.databinding.ActivityMainBinding
 import com.itechcom.expensestracker.presenter.viewmodel.LoginViewModel

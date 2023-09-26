@@ -2,7 +2,7 @@ package com.itechcom.data.storage.firebase.database.entity
 
 import com.google.firebase.database.Exclude
 
-class IncomeExpensesEntity(
+class DataIncomeExpensesEntity(
     @get:Exclude
     var id : String? = null,
     var planId : Int? = null,

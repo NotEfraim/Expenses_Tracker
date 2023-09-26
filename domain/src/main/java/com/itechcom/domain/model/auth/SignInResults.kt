@@ -1,4 +1,4 @@
-package com.itechcom.domain.model
+package com.itechcom.domain.model.auth
 
 data class SignInResults(
     var data : UserData? = null,

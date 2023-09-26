@@ -3,7 +3,7 @@ package com.itechcom.expensestracker.presenter.viewmodel
 import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.itechcom.domain.model.SignInResults
+import com.itechcom.domain.model.auth.SignInResults
 import com.itechcom.domain.usecase.LoginUtilUseCase
 import com.itechcom.domain.usecase.LoginWithBasicAuthUseCase
 import com.itechcom.domain.usecase.LoginWithFacebookUseCase

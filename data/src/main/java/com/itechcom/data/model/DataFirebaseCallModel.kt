@@ -1,8 +1,8 @@
-package com.itechcom.domain.model
+package com.itechcom.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class BasicAuthModel (
+data class DataFirebaseCallModel (
     @SerializedName("isSuccess")
     var isSuccess : Boolean = false,
     @SerializedName("errorMessage")

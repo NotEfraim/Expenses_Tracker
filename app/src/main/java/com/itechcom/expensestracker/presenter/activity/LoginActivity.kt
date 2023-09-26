@@ -4,14 +4,12 @@ import android.app.Activity
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.lifecycleScope
-import com.itechcom.domain.model.SignInResults
+import com.itechcom.domain.model.auth.SignInResults
 import com.itechcom.expensestracker.base.BaseActivity
 import com.itechcom.expensestracker.databinding.ActivityLoginBinding
 import com.itechcom.expensestracker.presenter.viewmodel.LoginViewModel
 import com.itechcom.expensestracker.utils.extensions.collect
-import com.itechcom.expensestracker.utils.extensions.hideLoadingDialog
 import com.itechcom.expensestracker.utils.extensions.intentTo
-import com.itechcom.expensestracker.utils.extensions.showLoadingDialog
 import com.itechcom.expensestracker.utils.extensions.toastUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -39,6 +37,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(
             googleSignInFunc()
         }
         loginButton.setOnClickListener {
+            showLoadingDialog()
             loggedInViaEmailAndPassword()
         }
 
@@ -60,7 +59,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(
     /** Observe if user logged in **/
     private fun userState(isLoggedIn : Boolean){
         if(isLoggedIn){
-            supportFragmentManager.showLoadingDialog()
+            showLoadingDialog()
             lifecycleScope.launch {
                 delay(1500)
                 intentTo<MainActivity> {  }
@@ -79,7 +78,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(
     private val signInLauncher = registerForActivityResult(
         ActivityResultContracts.StartIntentSenderForResult()
     ){ result ->
-        supportFragmentManager.showLoadingDialog()
+        showLoadingDialog()
         if(result.resultCode == Activity.RESULT_OK){
             lifecycleScope.launch {
                 viewModel.getSignInWithIntent(result.data?:return@launch)

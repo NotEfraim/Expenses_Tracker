@@ -1,9 +1,9 @@
 package com.itechcom.data.repository.firebase
 
-import com.itechcom.data.model.DataBasicAuthModel
+import com.itechcom.data.model.DataFirebaseCallModel
 
 interface BasicAuthRepository {
-    suspend fun loginViaUserNameAndPass(email : String, password : String) : DataBasicAuthModel
-    suspend fun registerViaUserNameAndPass(email : String, password : String) : DataBasicAuthModel
-    suspend fun sendPasswordResetEmail(email: String) : DataBasicAuthModel
+    suspend fun loginViaUserNameAndPass(email : String, password : String) : DataFirebaseCallModel
+    suspend fun registerViaUserNameAndPass(email : String, password : String) : DataFirebaseCallModel
+    suspend fun sendPasswordResetEmail(email: String) : DataFirebaseCallModel
 }

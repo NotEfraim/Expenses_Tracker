@@ -1,6 +1,5 @@
 package com.itechcom.data.repositoryImp.firebase
 
-import com.itechcom.data.model.DataBasicAuthModel
 import com.itechcom.data.repository.firebase.BasicAuthRepository
 import com.itechcom.data.storage.firebase.auth.BasicAuthClient
 import javax.inject.Inject

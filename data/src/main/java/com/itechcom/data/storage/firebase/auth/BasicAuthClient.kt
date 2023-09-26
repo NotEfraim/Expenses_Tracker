@@ -1,40 +1,40 @@
 package com.itechcom.data.storage.firebase.auth
 
 import com.google.firebase.auth.FirebaseAuth
-import com.itechcom.data.model.DataBasicAuthModel
+import com.itechcom.data.model.DataFirebaseCallModel
 import kotlinx.coroutines.tasks.await
 import java.util.concurrent.CancellationException
 
 class BasicAuthClient {
 
     private val auth = FirebaseAuth.getInstance()
-    suspend fun signInViaEmailAndPassword(email : String, password : String) : DataBasicAuthModel{
+    suspend fun signInViaEmailAndPassword(email : String, password : String) : DataFirebaseCallModel{
         return try {
             auth.signInWithEmailAndPassword(email, password).await()
-            DataBasicAuthModel(true, "")
+            DataFirebaseCallModel(true, "")
         }catch (e : Exception){
             if(e is CancellationException) throw e
-            DataBasicAuthModel(false, validateError(e.message))
+            DataFirebaseCallModel(false, validateError(e.message))
         }
     }
 
-    suspend fun registerVieEmailAndPassword(email: String, password: String) : DataBasicAuthModel {
+    suspend fun registerVieEmailAndPassword(email: String, password: String) : DataFirebaseCallModel {
         return try {
             auth.createUserWithEmailAndPassword(email, password).await()
-            DataBasicAuthModel(true, "")
+            DataFirebaseCallModel(true, "")
         }catch (e : Exception){
             if(e is CancellationException) throw e
-            DataBasicAuthModel(false, "${e.message}")
+            DataFirebaseCallModel(false, "${e.message}")
         }
     }
 
-    suspend fun sendPasswordResetEmail(email: String) : DataBasicAuthModel{
+    suspend fun sendPasswordResetEmail(email: String) : DataFirebaseCallModel{
         return try {
             auth.sendPasswordResetEmail(email).await()
-            DataBasicAuthModel(true, "")
+            DataFirebaseCallModel(true, "")
         }catch (e : Exception){
             if(e is CancellationException) throw e
-            DataBasicAuthModel(false, "${e.message}")
+            DataFirebaseCallModel(false, "${e.message}")
         }
     }
 
