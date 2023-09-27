@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentActivity
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.itechcom.data.storage.firebase.auth.BasicAuthClient
+import com.itechcom.data.storage.firebase.auth.FacebookAuthClient
 import com.itechcom.data.storage.firebase.auth.GoogleAuthClient
 import com.itechcom.data.storage.firebase.auth.LoginUtil
 import com.itechcom.data.storage.firebase.database.FirebaseDatabaseManager
@@ -57,5 +58,9 @@ class ComponentsModule {
     @Provides
     @Singleton
     fun provideLoginUtil(signInClient : SignInClient) = LoginUtil(signInClient)
+
+    @Provides
+    @Singleton
+    fun provideFacebookAuthClient() = FacebookAuthClient()
 
 }

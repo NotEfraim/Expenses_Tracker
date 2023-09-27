@@ -20,6 +20,21 @@
         android:theme="@style/Theme.ExpensesTracker"
         tools:targetApi="31">
 
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="333217575752159"/>
+
+        <meta-data android:name="com.facebook.sdk.ClientToken"
+            android:value="ebbd376eb5345395f737b9c7f296693d"/>
+
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"/>
+
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+        </activity>
+
         <activity
             android:name=".presenter.activity.SplashScreen"
             android:screenOrientation="portrait"

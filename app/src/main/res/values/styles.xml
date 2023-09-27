@@ -13,4 +13,12 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
+    <style name="LoginButtonStyle" parent="Widget.AppCompat.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">""</item>
+        <item name="android:textColor">#FFFFFF</item> <!-- Button text color -->
+        <item name="android:background">@mipmap/facebook_icon</item> <!-- Rounded background drawable -->
+    </style>
+
 </resources>

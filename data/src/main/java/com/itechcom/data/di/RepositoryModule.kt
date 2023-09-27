@@ -13,6 +13,7 @@ import com.itechcom.data.repositoryImp.firebase.BasicAuthRepositoryImp
 import com.itechcom.data.repositoryImp.firebase.DatabaseRepositoryImp
 import com.itechcom.data.repositoryImp.firebase.LoginUtilRepositoryImp
 import com.itechcom.data.storage.firebase.auth.BasicAuthClient
+import com.itechcom.data.storage.firebase.auth.FacebookAuthClient
 import com.itechcom.data.storage.firebase.auth.GoogleAuthClient
 import com.itechcom.data.storage.firebase.auth.LoginUtil
 import com.itechcom.data.storage.firebase.database.FirebaseDatabaseManager
@@ -35,8 +36,8 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun providesFacebookRepository() : FacebookAuthRepository {
-        return FacebookAuthRepositoryImp()
+    fun providesFacebookRepository(facebookAuthClient: FacebookAuthClient) : FacebookAuthRepository {
+        return FacebookAuthRepositoryImp(facebookAuthClient)
     }
 
     @Provides

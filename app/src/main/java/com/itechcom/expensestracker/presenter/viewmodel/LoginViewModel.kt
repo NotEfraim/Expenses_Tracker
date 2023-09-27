@@ -1,8 +1,10 @@
 package com.itechcom.expensestracker.presenter.viewmodel
 
 import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.facebook.login.widget.LoginButton
 import com.itechcom.domain.model.auth.SignInResults
 import com.itechcom.domain.usecase.LoginUtilUseCase
 import com.itechcom.domain.usecase.LoginWithBasicAuthUseCase
@@ -60,6 +62,15 @@ class LoginViewModel @Inject constructor(
         loginWithBasicAuthUseCase.saveEmailToPref(key, email)
     fun saveLoginType(key : String, loginType : String) =
         loginWithBasicAuthUseCase.saveEmailToPref(key, loginType)
+
+    /** Login with Facebook */
+
+    suspend fun requestFacebookSignIn(loginButton: LoginButton) =
+        loginWithFacebookUseCase.requestLoginWithFacebook(loginButton)
+
+    fun startFacebookActivityResult(resultCode: Int, requestCode : Int, data : Intent?) =
+        loginWithFacebookUseCase.startFacebookActivityResult(resultCode, requestCode, data)
+
 
     /** Login Util **/
 

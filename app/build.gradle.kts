@@ -67,6 +67,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.android.gms:play-services-auth:20.7.0")
     implementation("com.google.firebase:firebase-database-ktx")
+    implementation("com.facebook.android:facebook-android-sdk:13.0.0")
 
     //Navigation Component
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.2")

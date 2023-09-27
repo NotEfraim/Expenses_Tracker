@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">My Expenses</string>
     <string name="sharedPrefName">LocalPref</string>
     <string name="splash_footer">Tracking Your Expenses, Empowering Your Financial Future</string>

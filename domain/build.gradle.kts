@@ -45,6 +45,7 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.48")
     ksp("com.google.dagger:hilt-compiler:2.48")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    implementation("com.facebook.android:facebook-android-sdk:13.0.0")
 
     implementation(project(":data"))
 

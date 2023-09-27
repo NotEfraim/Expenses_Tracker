@@ -1,6 +1,8 @@
 package com.itechcom.expensestracker.presenter.activity
 
 import android.app.Activity
+import android.content.Intent
+import android.util.Log
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.lifecycleScope
@@ -15,6 +17,7 @@ import com.itechcom.expensestracker.utils.extensions.intentTo
 import com.itechcom.expensestracker.utils.extensions.toastUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -43,6 +46,19 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(
             loggedInViaEmailAndPassword()
         }
 
+        loginFacebookBtnFront.setOnClickListener {
+            toastUtil("Coming soon...")
+        }
+        initFacebookLogin()
+
+    }
+
+    private fun initFacebookLogin() = viewModel.apply {
+        lifecycleScope.launch {
+            requestFacebookSignIn(binding.loginFacebookBtn).collectLatest{
+                Log.d("initFacebookLogin", "$it")
+            }
+        }
     }
 
     private fun loggedInViaEmailAndPassword() = viewModel.apply {
@@ -99,5 +115,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(
             val signInIntentSender = viewModel.requestGoogleSignIn()
             signInLauncher.launch(IntentSenderRequest.Builder(signInIntentSender ?: return@launch).build())
         }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        viewModel.startFacebookActivityResult(resultCode, requestCode, data)
+
     }
 }
