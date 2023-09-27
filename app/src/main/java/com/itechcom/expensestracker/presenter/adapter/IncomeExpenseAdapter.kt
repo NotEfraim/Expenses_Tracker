@@ -17,8 +17,4 @@ class IncomeExpenseAdapter : BaseQuickAdapter<String, QuickViewHolder>() {
     ): QuickViewHolder {
         return QuickViewHolder(R.layout.item_income_expenses, parent)
     }
-
-    override fun getItemCount(items: List<String>): Int {
-        return 5
-    }
 }

@@ -19,8 +19,4 @@ class BudgetPlanAdapter : BaseQuickAdapter<String, QuickViewHolder>() {
     ): QuickViewHolder {
         return QuickViewHolder(R.layout.item_plan, parent)
     }
-
-    override fun getItemCount(items: List<String>): Int {
-        return 6
-    }
 }

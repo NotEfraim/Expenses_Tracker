@@ -12,6 +12,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.itechcom.expensestracker.R
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -43,10 +44,10 @@ fun Context.toastUtil(msg : String){
     Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
 }
 
-//fun BaseQuickAdapter<*, *>.useEmptyView(){
-//    isEmptyViewEnable = true
-//    setEmptyViewLayout(context, R.layout.layout_empty_view)
-//}
+fun BaseQuickAdapter<*, *>.useEmptyView(){
+    isEmptyViewEnable = true
+    setEmptyViewLayout(context, R.layout.layout_empty_view)
+}
 
 fun <T: Any>LifecycleOwner.collect(data: SharedFlow<T?>, function: (T) -> Unit) {
     this.lifecycleScope.launch {

@@ -17,6 +17,9 @@
         <action
             android:id="@+id/actionToViewPlanFragment"
             app:destination="@id/viewPlanFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_addPlanFragment"
+            app:destination="@id/addPlanFragment" />
     </fragment>
 
     <fragment
@@ -27,6 +30,9 @@
         <action
             android:id="@+id/action_fragmentAllPlans_to_viewPlanFragment"
             app:destination="@id/viewPlanFragment" />
+        <action
+            android:id="@+id/action_fragmentAllPlans_to_addPlanFragment"
+            app:destination="@id/addPlanFragment" />
     </fragment>
 
     <fragment
@@ -92,6 +98,11 @@
             android:id="@+id/action_allExpensesIncomeFragment_to_editIncomeFragment22"
             app:destination="@id/editIncomeFragment2" />
     </fragment>
+    <fragment
+        android:id="@+id/addPlanFragment"
+        android:name="com.itechcom.expensestracker.presenter.fragment.AddPlanFragment"
+        tools:layout="@layout/fragment_add_plan"
+        android:label="AddPlanFragment" />
 
 
 </navigation>
