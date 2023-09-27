@@ -5,6 +5,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.itechcom.data.model.DataFirebaseCallModel
 import com.itechcom.data.storage.firebase.database.entity.DataIncomeExpensesEntity
 import com.itechcom.data.storage.firebase.database.entity.DataPlanEntity
+import com.itechcom.data.storage.firebase.database.entity.DataPlanEntityList
 import com.itechcom.data.storage.firebase.database.entity.DataUserEntity
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
@@ -65,8 +66,8 @@ class FirebaseDatabaseManager {
                 .await()
 
             if(query.exists()){
-                val userResponse = query.children.first().getValue(DataUserEntity::class.java)
-                emit(DataFirebaseCallModel(true, userResponse, "" ))
+                val callResponse = query.children.first().getValue(DataUserEntity::class.java)
+                emit(DataFirebaseCallModel(true, callResponse, "" ))
             }
 
             else emit(DataFirebaseCallModel(false, "" ))
@@ -76,5 +77,23 @@ class FirebaseDatabaseManager {
             emit(DataFirebaseCallModel(false, "${e.message}"))
         }
     }
+
+    suspend fun getAllPlans(limitTo : Int) = flow {
+        try {
+            val query = plansTable.limitToFirst(limitTo).get().await()
+
+            if(query.exists()){
+                val callResponse = query.getValue(DataPlanEntityList::class.java)
+                emit(DataFirebaseCallModel(true, callResponse, ""))
+            }
+
+            else emit(DataFirebaseCallModel(false, ""))
+
+        }catch (e : Exception){
+            if(e is CancellationException) throw e
+            emit(DataFirebaseCallModel(false, "${e.message}"))
+        }
+    }
+
 
 }

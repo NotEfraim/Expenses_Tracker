@@ -1,10 +1,12 @@
 package com.itechcom.data.repositoryImp.firebase
 
+import com.itechcom.data.model.DataFirebaseCallModel
 import com.itechcom.data.repository.firebase.DatabaseRepository
 import com.itechcom.data.storage.firebase.database.FirebaseDatabaseManager
 import com.itechcom.data.storage.firebase.database.entity.DataIncomeExpensesEntity
 import com.itechcom.data.storage.firebase.database.entity.DataPlanEntity
 import com.itechcom.data.storage.firebase.database.entity.DataUserEntity
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class DatabaseRepositoryImp @Inject constructor(
@@ -21,5 +23,9 @@ class DatabaseRepositoryImp @Inject constructor(
 
     override suspend fun getBasicAuthUser(email: String) =
         firebaseDatabaseManager.getBasicAuthUser(email)
+
+    override suspend fun getAllPlans(limitTo: Int) =
+        firebaseDatabaseManager.getAllPlans(limitTo)
+
 
 }

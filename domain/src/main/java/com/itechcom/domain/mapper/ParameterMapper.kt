@@ -7,8 +7,15 @@ import com.itechcom.domain.model.database.IncomeExpensesEntity
 import com.itechcom.domain.model.database.PlanEntity
 import com.itechcom.domain.model.database.UserEntity
 
-fun PlanEntity.mapToPlanEntity() : DataPlanEntity {
-    return DataPlanEntity(planId, stringDate, totalIncome, totalExpenses)
+fun PlanEntity.mapToDataPlanEntity() : DataPlanEntity {
+    return DataPlanEntity(
+        planId,
+        stringDate,
+        budget,
+        totalIncome,
+        totalExpenses,
+        description
+    )
 }
 
 fun UserEntity.mapToDataUserEntity() : DataUserEntity {
