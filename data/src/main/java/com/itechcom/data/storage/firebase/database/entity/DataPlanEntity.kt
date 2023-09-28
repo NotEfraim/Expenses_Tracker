@@ -13,5 +13,5 @@ data class DataPlanEntity(
 )
 
 data class DataPlanEntityList(
-    val data : List<DataPlanEntity> = arrayListOf()
+    var data : List<DataPlanEntity>? = null
 )

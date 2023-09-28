@@ -78,20 +78,25 @@ class FirebaseDatabaseManager {
         }
     }
 
-    suspend fun getAllPlans(limitTo : Int) = flow {
-        try {
+    suspend fun getAllPlans(limitTo : Int) : DataFirebaseCallModel {
+        return try {
             val query = plansTable.limitToFirst(limitTo).get().await()
 
             if(query.exists()){
                 val callResponse = query.getValue(DataPlanEntityList::class.java)
-                emit(DataFirebaseCallModel(true, callResponse, ""))
+                val list = arrayListOf<DataPlanEntity>()
+                query.children.map {
+                    val plan = it.getValue(DataPlanEntity::class.java)
+                    plan?.let { list.add(plan) }
+                }
+                callResponse?.data = list.toList()
+                DataFirebaseCallModel(true, callResponse, "")
             }
-
-            else emit(DataFirebaseCallModel(false, ""))
+            else DataFirebaseCallModel(false, "")
 
         }catch (e : Exception){
             if(e is CancellationException) throw e
-            emit(DataFirebaseCallModel(false, "${e.message}"))
+            DataFirebaseCallModel(false, "${e.message}")
         }
     }
 

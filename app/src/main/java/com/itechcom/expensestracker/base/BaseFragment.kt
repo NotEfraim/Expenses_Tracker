@@ -1,7 +1,6 @@
 package com.itechcom.expensestracker.base
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +16,7 @@ abstract class BaseFragment<VB: ViewBinding,VM: ViewModel> (
     model: KClass<out VM>
 ):Fragment(){
 
+    var isFirstCall = true
     private val loadingDialog by lazy { createLoadingDialog() }
     private var _binding: VB? = null
     val binding : VB  get() = _binding.let { binding ->
@@ -43,7 +43,8 @@ abstract class BaseFragment<VB: ViewBinding,VM: ViewModel> (
     }
 
     fun hideLoadingDialog(){
-        loadingDialog.dismiss()
+        if(requireActivity().isFinishing) return
+        loadingDialog.hide()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

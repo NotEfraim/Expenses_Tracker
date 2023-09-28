@@ -74,4 +74,5 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.7.2")
 
     implementation(project(":domain"))
+    implementation(kotlin("reflect"))
 }

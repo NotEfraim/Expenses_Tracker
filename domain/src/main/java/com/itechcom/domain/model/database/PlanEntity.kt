@@ -9,6 +9,6 @@ class PlanEntity(
     var description : String? = null
 )
 
-data class DataPlanEntityList(
-    val data : List<PlanEntity> = arrayListOf()
+data class PlanEntityList(
+    var data : List<PlanEntity>? = null
 )
