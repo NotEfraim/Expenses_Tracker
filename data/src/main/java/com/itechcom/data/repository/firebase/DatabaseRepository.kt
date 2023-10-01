@@ -12,5 +12,6 @@ interface DatabaseRepository {
     suspend fun addIncomeAndExpenses(incomeExpensesEntity: DataIncomeExpensesEntity) : DataFirebaseCallModel
     suspend fun getBasicAuthUser(email : String) : Flow<DataFirebaseCallModel>
     suspend fun getAllPlans(limitTo : Int) : DataFirebaseCallModel
+    suspend fun getLatestPlan() : DataFirebaseCallModel
 
 }

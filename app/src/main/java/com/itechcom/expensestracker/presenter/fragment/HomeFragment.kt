@@ -1,8 +1,8 @@
 package com.itechcom.expensestracker.presenter.fragment
 
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.lifecycleScope
+import com.itechcom.domain.model.database.PlanEntity
 import com.itechcom.domain.model.database.PlanEntityList
 import com.itechcom.expensestracker.R
 import com.itechcom.expensestracker.base.BaseFragment
@@ -24,13 +24,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
 
     override fun HomeViewModel.initCall() {
         lifecycleScope.launch {
-            getAllPlans(5)
+            getAllPlans(10)
+            getLatestPlan()
         }
     }
 
     override fun HomeViewModel.initObserver() {
         collect(errorToast, ::errorToaster)
         collect(plansResponse, ::initPlansData)
+        collect(latestPlanResponse, ::getLatestPlan)
     }
 
     override fun FragmentHomeBinding.initialize() {
@@ -38,7 +40,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
         moreBtn.setOnClickListener(::onClick)
         addPlanBtn.setOnClickListener(::onClick)
         initViews()
+    }
+
+    private fun getLatestPlan(data : PlanEntity) = binding.apply {
         initBanner()
+        planDate.text = data.stringDate
+        planAmount.text = data.budget?:"0.00"
+        expensesAmount.text = data.totalExpenses?:"0.00"
+        incomeAmount.text = data.totalIncome?:"0.00"
     }
 
     private fun initPlansData(data: PlanEntityList) {
@@ -59,15 +68,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
     }
 
     private fun initBanner() = binding.apply {
-        if (planDate.text.isNullOrEmpty()) {
-            bannerContainer.visibility = View.GONE
-            noPlanLottie.visibility = View.VISIBLE
-            noPlanText.visibility = View.VISIBLE
-        } else {
-            bannerContainer.visibility = View.VISIBLE
-            noPlanLottie.visibility = View.GONE
-            noPlanText.visibility = View.GONE
-        }
+        bannerContainer.visibility = View.VISIBLE
+        noPlanLottie.visibility = View.GONE
+        noPlanText.visibility = View.GONE
     }
 
     override fun onClick(v: View?) {

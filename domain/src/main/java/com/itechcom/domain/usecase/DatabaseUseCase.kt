@@ -51,4 +51,18 @@ class DatabaseUseCase @Inject constructor(
         return response.mapToFirebaseCallModel()
     }
 
+    suspend fun getLatestPlan() : FirebaseCallModel {
+        val response = databaseRepository.getLatestPlan()
+        val a = response.data
+        if(a is DataPlanEntity){
+            return FirebaseCallModel(
+                response.isSuccess,
+                a.mapToPlanEntity(),
+                response.errorMessage
+            )
+        }
+        return response.mapToFirebaseCallModel()
+    }
+
+
 }

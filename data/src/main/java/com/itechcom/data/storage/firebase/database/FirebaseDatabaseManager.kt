@@ -101,4 +101,24 @@ class FirebaseDatabaseManager {
     }
 
 
+    suspend fun getLatestPlan() : DataFirebaseCallModel {
+        return try {
+            val query = plansTable.orderByChild("stringDate")
+                .limitToFirst(1)
+                .get()
+                .await()
+
+            if(query.exists()){
+                val response = query.children.first().getValue(DataPlanEntity::class.java)
+                DataFirebaseCallModel(true, response, "")
+            }
+            else DataFirebaseCallModel(false, "")
+
+        }catch (e: Exception){
+            if(e is CancellationException) throw e
+            DataFirebaseCallModel(false, "${e.message}")
+        }
+    }
+
+
 }
