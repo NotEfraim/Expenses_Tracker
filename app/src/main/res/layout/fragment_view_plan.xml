@@ -89,7 +89,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:progress="30"
                 android:progressDrawable="@drawable/progress_active_plan"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -102,8 +101,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="₱64,500 of ₱129,000"
-                android:textColor="@color/white"
+                android:textColor="@color/color_3F6D83"
                 android:textSize="11sp"
                 app:layout_constraintStart_toStartOf="@+id/totalProgress"
                 app:layout_constraintTop_toTopOf="@+id/totalProgress" />
@@ -113,7 +111,6 @@
                 android:id="@+id/totalLeftText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="₱64,500 left"
                 android:textColor="@color/color_3F6D83"
                 android:textSize="11sp"
                 app:layout_constraintBottom_toTopOf="@+id/totalProgress"
@@ -148,7 +145,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:progress="30"
                 android:progressDrawable="@drawable/progress_expenses"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -161,8 +157,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="₱64,500 of ₱129,000"
-                android:textColor="@color/white"
+                android:textColor="@color/color_3F6D83"
                 android:textSize="11sp"
                 app:layout_constraintStart_toStartOf="@+id/expensesProgress"
                 app:layout_constraintTop_toTopOf="@+id/expensesProgress" />
@@ -172,7 +167,6 @@
                 android:id="@+id/expensesLeftText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="₱64,500 left"
                 android:textColor="@color/color_3F6D83"
                 android:textSize="11sp"
                 app:layout_constraintBottom_toTopOf="@+id/expensesProgress"
@@ -207,7 +201,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:progress="30"
                 android:progressDrawable="@drawable/progress_income"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -220,22 +213,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="₱64,500 of ₱129,000"
-                android:textColor="@color/white"
+                android:textColor="@color/color_3F6D83"
                 android:textSize="11sp"
                 app:layout_constraintStart_toStartOf="@+id/incomeProgress"
                 app:layout_constraintTop_toTopOf="@+id/incomeProgress" />
 
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/incomeLeftText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="₱64,500 left"
-                android:textColor="@color/color_3F6D83"
-                android:textSize="11sp"
-                app:layout_constraintBottom_toTopOf="@+id/incomeProgress"
-                app:layout_constraintEnd_toEndOf="@+id/incomeProgress" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

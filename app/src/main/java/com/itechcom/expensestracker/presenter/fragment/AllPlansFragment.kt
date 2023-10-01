@@ -7,7 +7,6 @@ import com.itechcom.expensestracker.base.BaseFragment
 import com.itechcom.expensestracker.databinding.FragmentAllPlansBinding
 import com.itechcom.expensestracker.presenter.adapter.BudgetPlanAdapter
 import com.itechcom.expensestracker.presenter.viewmodel.AllPlansViewModel
-import com.itechcom.expensestracker.presenter.viewmodel.HomeViewModel
 import com.itechcom.expensestracker.utils.extensions.collect
 import com.itechcom.expensestracker.utils.extensions.navigateTo
 import com.itechcom.expensestracker.utils.extensions.useEmptyView
@@ -38,6 +37,10 @@ class AllPlansFragment : BaseFragment<FragmentAllPlansBinding, AllPlansViewModel
         allPlansRecycler.adapter = budgetPlanAdapter
         budgetPlanAdapter.setOnItemClickListener { _, v, _ ->
             v.navigateTo(R.id.action_fragmentAllPlans_to_viewPlanFragment)
+        }
+
+        addPlanBtn.setOnClickListener {
+            it.navigateTo(R.id.action_fragmentAllPlans_to_addPlanFragment)
         }
     }
 

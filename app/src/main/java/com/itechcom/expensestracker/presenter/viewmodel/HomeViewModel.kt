@@ -35,7 +35,6 @@ class HomeViewModel @Inject constructor(
     }
 
     suspend fun getLatestPlan(){
-        Log.d("FirebaseXX", "View Model")
         val response = databaseUseCase.getLatestPlan()
         if(response.isSuccess){
             val data = response.data

@@ -66,7 +66,7 @@ fun List<DataPlanEntity>.mapToListPlanEntity() : List<PlanEntity>{
 }
 
 fun DataPlanEntity.mapToPlanEntity() : PlanEntity {
-    return PlanEntity(planId, stringDate, totalIncome, totalExpenses)
+    return PlanEntity(planId, stringDate, budget, totalIncome, totalExpenses, description)
 }
 
 fun DataUserEntity.mapToUserDataEntity() : UserEntity {

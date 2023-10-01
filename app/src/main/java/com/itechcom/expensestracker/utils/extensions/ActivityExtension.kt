@@ -6,6 +6,7 @@ import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
@@ -67,8 +68,8 @@ fun <T: Any>LifecycleOwner.collect(data: SharedFlow<T?>, function: (T) -> Unit) 
     }
 }
 
-fun View.navigateTo(into : Int){
-    Navigation.findNavController(this).navigate(into)
+fun View.navigateTo(into : Int, bundle: Bundle? = null){
+    Navigation.findNavController(this).navigate(into, bundle)
 }
 
 fun AppCompatTextView.showDatePicker() {

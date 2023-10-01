@@ -108,6 +108,7 @@ class FirebaseDatabaseManager {
                 .get()
                 .await()
 
+
             if(query.exists()){
                 val response = query.children.first().getValue(DataPlanEntity::class.java)
                 DataFirebaseCallModel(true, response, "")

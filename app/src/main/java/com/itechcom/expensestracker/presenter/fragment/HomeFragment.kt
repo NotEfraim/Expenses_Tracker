@@ -1,5 +1,8 @@
 package com.itechcom.expensestracker.presenter.fragment
 
+import android.annotation.SuppressLint
+import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.itechcom.domain.model.database.PlanEntity
@@ -42,12 +45,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
         initViews()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun getLatestPlan(data : PlanEntity) = binding.apply {
         initBanner()
         planDate.text = data.stringDate
-        planAmount.text = data.budget?:"0.00"
-        expensesAmount.text = data.totalExpenses?:"0.00"
-        incomeAmount.text = data.totalIncome?:"0.00"
+        planAmount.text = "${data.budget?:"0"}.00"
+        expensesAmount.text = data.totalExpenses?:"₱0.00"
+        incomeAmount.text = data.totalIncome?:"₱0.00"
     }
 
     private fun initPlansData(data: PlanEntityList) {
@@ -58,13 +62,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
         budgetPlanAdapter.submitList(data.data)
         budgetPlanAdapter.useEmptyView()
         hideLoadingDialog()
+
+        budgetPlanAdapter.setOnItemClickListener { _, view, position ->
+            val bundle = Bundle()
+            val adapterData = data.data?.get(position)
+            bundle.putSerializable("plan_model", adapterData)
+            view.navigateTo(R.id.actionToViewPlanFragment, bundle)
+        }
     }
 
     private fun initViews() = binding.apply {
         planRecycler.adapter = budgetPlanAdapter
-        budgetPlanAdapter.setOnItemClickListener { _, view, _ ->
-            view.navigateTo(R.id.actionToViewPlanFragment)
-        }
     }
 
     private fun initBanner() = binding.apply {
