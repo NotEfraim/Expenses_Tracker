@@ -43,4 +43,9 @@ class ViewPlanViewModel @Inject constructor(
         else _errorMessage.value = response.errorMessage?:return
     }
 
+    fun clearStates(){
+        _plan.value = PlanEntity()
+        _incomeExpenses.value = IncomeExpensesEntityList()
+    }
+
 }

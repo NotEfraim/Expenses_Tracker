@@ -7,13 +7,12 @@
     android:layout_height="match_parent">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textView6"
+        android:id="@+id/planDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/side_title_pink_bg"
         android:paddingHorizontal="30dp"
         android:paddingVertical="3dp"
-        android:text="September 1 - September 30 2023"
         android:textColor="@color/white"
         android:textSize="14sp"
         android:layout_marginTop="20dp"
@@ -30,7 +29,7 @@
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6"
+        app:layout_constraintTop_toBottomOf="@+id/planDate"
         app:layout_constraintWidth_percent=".95">
 
         <androidx.constraintlayout.widget.ConstraintLayout

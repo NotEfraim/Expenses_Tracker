@@ -18,6 +18,7 @@ import com.itechcom.expensestracker.presenter.viewmodel.ViewPlanViewModel
 import com.itechcom.expensestracker.utils.extensions.collect
 import com.itechcom.expensestracker.utils.extensions.navigateTo
 import com.itechcom.expensestracker.utils.extensions.useEmptyView
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class ViewPlanFragment : BaseFragment<FragmentViewPlanBinding, ViewPlanViewModel>(
@@ -47,6 +48,7 @@ class ViewPlanFragment : BaseFragment<FragmentViewPlanBinding, ViewPlanViewModel
     }
 
     private fun initViews() = binding.apply {
+        showLoadingDialog()
         expensesIncomeRecycler.adapter = incomeExpenseAdapter
         initClicks()
     }
@@ -56,9 +58,17 @@ class ViewPlanFragment : BaseFragment<FragmentViewPlanBinding, ViewPlanViewModel
         planId = args.getString("plan_id")
     }
 
-    private fun initIncomeExpenses(data : IncomeExpensesEntityList){
+    private fun initIncomeExpenses(data : IncomeExpensesEntityList?){
+        if(data?.data == null) {
+            lifecycleScope.launch {
+                delay(2000)
+                hideLoadingDialog()
+            }
+            return
+        }
         incomeExpenseAdapter.submitList(data.data)
         incomeExpenseAdapter.useEmptyView()
+        hideLoadingDialog()
     }
 
     @SuppressLint("SetTextI18n")
@@ -82,6 +92,8 @@ class ViewPlanFragment : BaseFragment<FragmentViewPlanBinding, ViewPlanViewModel
         incomeText.text = "₱$expenses.00 of ₱$budgetIncome.00"
         incomeProgress.max = budget
         incomeProgress.progress = income
+
+        planDate.text = model.stringDate
     }
 
     private fun initClicks() = binding.apply {
@@ -119,5 +131,10 @@ class ViewPlanFragment : BaseFragment<FragmentViewPlanBinding, ViewPlanViewModel
                 }
             }
         }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        viewModel.clearStates()
     }
 }
