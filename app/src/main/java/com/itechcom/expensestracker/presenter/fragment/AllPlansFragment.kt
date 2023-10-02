@@ -22,9 +22,10 @@ class AllPlansFragment : BaseFragment<FragmentAllPlansBinding, AllPlansViewModel
     private val budgetPlanAdapter = BudgetPlanAdapter()
 
 
-    override fun AllPlansViewModel.initCall() {
+    override fun onResume() {
+        super.onResume()
         lifecycleScope.launch {
-            getAllPlans(100)
+            viewModel.getAllPlans(100)
         }
     }
 

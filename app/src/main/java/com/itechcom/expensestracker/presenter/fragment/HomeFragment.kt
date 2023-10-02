@@ -17,6 +17,7 @@ import com.itechcom.expensestracker.utils.extensions.collect
 import com.itechcom.expensestracker.utils.extensions.navigateTo
 import com.itechcom.expensestracker.utils.extensions.toastUtil
 import com.itechcom.expensestracker.utils.extensions.useEmptyView
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
@@ -29,7 +30,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
     override fun onResume() {
         super.onResume()
         lifecycleScope.launch {
-            viewModel.getAllPlans(10)
+            viewModel.getAllPlans(20)
             viewModel.getLatestPlan()
         }
     }
@@ -66,10 +67,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
         budgetPlanAdapter.submitList(data?.data)
         budgetPlanAdapter.useEmptyView()
         if(data?.data == null){
-            hideLoadingDialog()
             budgetPlanAdapter.useEmptyView()
+            lifecycleScope.launch {
+                delay(2000)
+                hideLoadingDialog()
+            }
             return
         }
+
         hideLoadingDialog()
         budgetPlanAdapter.setOnItemClickListener { _, view, position ->
             val bundle = Bundle()

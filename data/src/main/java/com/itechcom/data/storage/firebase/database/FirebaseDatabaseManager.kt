@@ -102,7 +102,7 @@ class FirebaseDatabaseManager @Inject constructor(
                     val plan = it.getValue(DataPlanEntity::class.java)
                     plan?.let { list.add(plan) }
                 }
-                callResponse?.data = list.toList()
+                callResponse?.data = list.toList().reversed()
                 DataFirebaseCallModel(true, callResponse, "")
             }
             else DataFirebaseCallModel(false, null,"")
@@ -117,14 +117,12 @@ class FirebaseDatabaseManager @Inject constructor(
     suspend fun getLatestPlan() : DataFirebaseCallModel {
         return try {
             val query = plansTable.orderByChild("userName")
-                .limitToFirst(1)
+                .limitToLast(1)
                 .equalTo(userEmail)
                 .get()
                 .await()
 
             Log.d("queryMe", "$query $userEmail")
-
-
 
             if(query.exists()){
                 val response = query.children.first().getValue(DataPlanEntity::class.java)
