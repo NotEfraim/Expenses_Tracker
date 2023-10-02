@@ -1,13 +1,33 @@
 package com.itechcom.expensestracker.presenter.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.QuickViewHolder
+import com.itechcom.domain.model.database.IncomeExpensesEntity
 import com.itechcom.expensestracker.R
 
-class IncomeExpenseAdapter : BaseQuickAdapter<String, QuickViewHolder>() {
-    override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: String?) {
+class IncomeExpenseAdapter : BaseQuickAdapter<IncomeExpensesEntity, QuickViewHolder>() {
+
+    @SuppressLint("SetTextI18n")
+    override fun onBindViewHolder(
+        holder: QuickViewHolder,
+        position: Int,
+        item: IncomeExpensesEntity?
+    ) {
+
+        if(item?.type == "income"){
+            holder.getView<ImageView>(R.id.startIcon).setImageResource(R.mipmap.income_circle_icon)
+            holder.getView<TextView>(R.id.itemAmount).text = "+₱${item.amount}.00"
+        }
+        else{
+            holder.getView<ImageView>(R.id.startIcon).setImageResource(R.mipmap.expenses_circle_icon)
+            holder.getView<TextView>(R.id.itemAmount).text = "-₱${item?.amount}.00"
+        }
+
     }
 
     override fun onCreateViewHolder(

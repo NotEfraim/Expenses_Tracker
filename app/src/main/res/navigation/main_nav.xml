@@ -42,22 +42,28 @@
         android:label="ViewPlanFragment" >
         <action
             android:id="@+id/actionToEditPlanFragment"
-            app:destination="@id/editPlanFragment" />
+            app:destination="@id/editPlanFragment"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/actionToEditIncome"
-            app:destination="@id/editIncomeFragment2" />
+            app:destination="@id/editIncomeFragment2"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/actionToEditExpenses"
-            app:destination="@id/editExpensesFragment2" />
+            app:destination="@id/editExpensesFragment2"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/actionToAddExpensesFragment"
-            app:destination="@id/addExpensesFragment" />
+            app:destination="@id/addExpensesFragment"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/actionToAddIncomeFragment"
-            app:destination="@id/addIncomeFragment" />
+            app:destination="@id/addIncomeFragment"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_viewPlanFragment_to_allExpensesIncomeFragment2"
-            app:destination="@id/allExpensesIncomeFragment" />
+            app:destination="@id/allExpensesIncomeFragment"
+            app:popUpToInclusive="true"/>
 
     </fragment>
 
@@ -81,7 +87,7 @@
         android:name="com.itechcom.expensestracker.presenter.fragment.AddExpensesFragment"
         tools:layout="@layout/fragment_add_expenses"
         android:label="AddExpensesFragment" />
-    <fragment
+     <fragment
         android:id="@+id/addIncomeFragment"
         android:name="com.itechcom.expensestracker.presenter.fragment.AddIncomeFragment"
         tools:layout="@layout/fragment_add_income"

@@ -29,5 +29,8 @@ class DatabaseRepositoryImp @Inject constructor(
     override suspend fun getAllPlans(limitTo: Int) = firebaseDatabaseManager.getAllPlans(limitTo)
 
     override suspend fun getLatestPlan(): DataFirebaseCallModel = firebaseDatabaseManager.getLatestPlan()
+    override suspend fun getPlan(key: String) = firebaseDatabaseManager.getPlan(key)
+    override suspend fun getAllIncomeAndExpenses(planId: String)
+    = firebaseDatabaseManager.getAllIncomeAndExpenses(planId)
 
 }

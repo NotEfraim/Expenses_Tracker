@@ -8,7 +8,7 @@ class DataIncomeExpensesEntity(
     @SerializedName("id")
     var id : String? = null,
     @SerializedName("planId")
-    var planId : Int? = null,
+    var planId : String? = null,
     @SerializedName("type")
     var type : String? = null,
     @SerializedName("name")

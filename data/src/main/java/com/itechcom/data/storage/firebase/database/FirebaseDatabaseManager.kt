@@ -93,13 +93,12 @@ class FirebaseDatabaseManager @Inject constructor(
                 .get()
                 .await()
 
-            Log.d("queryMe", "$query $userEmail")
-
             if(query.exists()){
                 val callResponse = query.getValue(DataPlanEntityList::class.java)
                 val list = arrayListOf<DataPlanEntity>()
                 query.children.map {
                     val plan = it.getValue(DataPlanEntity::class.java)
+                    plan?.planId = it.key
                     plan?.let { list.add(plan) }
                 }
                 callResponse?.data = list.toList().reversed()
@@ -114,6 +113,22 @@ class FirebaseDatabaseManager @Inject constructor(
     }
 
 
+    suspend fun getPlan(key : String) : DataFirebaseCallModel {
+        return try {
+            val query = plansTable.child(key).get().await()
+
+            if(query.exists()){
+                val data = query.getValue(DataPlanEntity::class.java)
+                DataFirebaseCallModel(true, data, null)
+            }
+            else DataFirebaseCallModel(false, null, null)
+
+        }catch (e : Exception){
+            if(e is CancellationException) throw e
+            DataFirebaseCallModel(false, null, e.message)
+        }
+    }
+
     suspend fun getLatestPlan() : DataFirebaseCallModel {
         return try {
             val query = plansTable.orderByChild("userName")
@@ -122,8 +137,6 @@ class FirebaseDatabaseManager @Inject constructor(
                 .get()
                 .await()
 
-            Log.d("queryMe", "$query $userEmail")
-
             if(query.exists()){
                 val response = query.children.first().getValue(DataPlanEntity::class.java)
                 DataFirebaseCallModel(true, response, "")
@@ -131,29 +144,33 @@ class FirebaseDatabaseManager @Inject constructor(
             else DataFirebaseCallModel(false, "")
 
         }catch (e: Exception){
-            Log.d("queryMe", "${e.message}")
             if(e is CancellationException) throw e
             DataFirebaseCallModel(false, "${e.message}")
         }
     }
 
-    suspend fun getAllPlansAndExpenses() : DataFirebaseCallModel {
+    suspend fun getAllIncomeAndExpenses(planId : String) : DataFirebaseCallModel {
         return try {
-            val query = incomeExpensesTable.equalTo(userEmail).get().await()
+            val query = incomeExpensesTable
+                .orderByChild("planId")
+                .equalTo(planId)
+                .get()
+                .await()
+
             if(query.exists()){
                 val list = arrayListOf<DataIncomeExpensesEntity>()
-                val data = query.getValue(DataIncomeExpensesEntityList::class.java)
                 query.children.map {
                     val s = it.getValue(DataIncomeExpensesEntity::class.java)
                     s?.let { d -> list.add(d) }
                 }
-                data?.data = list.toList()
-                DataFirebaseCallModel(true, list, "")
+                DataFirebaseCallModel(true, DataIncomeExpensesEntityList(data = list), "")
 
             }
             else DataFirebaseCallModel(true, null, "")
 
         }catch (e : Exception){
+            Log.d("queryMe", "${e.message}")
+            if(e is CancellationException) throw e
             DataFirebaseCallModel(false, null, "${e.message}")
         }
     }

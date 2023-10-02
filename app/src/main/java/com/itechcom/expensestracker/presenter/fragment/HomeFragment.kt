@@ -79,7 +79,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
         budgetPlanAdapter.setOnItemClickListener { _, view, position ->
             val bundle = Bundle()
             val adapterData = data.data?.get(position)
-            bundle.putSerializable("plan_model", adapterData)
+            bundle.putString("plan_id", adapterData?.planId)
             view.navigateTo(R.id.actionToViewPlanFragment, bundle)
         }
     }

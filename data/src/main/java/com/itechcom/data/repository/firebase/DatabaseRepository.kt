@@ -13,5 +13,7 @@ interface DatabaseRepository {
     suspend fun getBasicAuthUser(email : String) : Flow<DataFirebaseCallModel>
     suspend fun getAllPlans(limitTo : Int) : DataFirebaseCallModel
     suspend fun getLatestPlan() : DataFirebaseCallModel
+    suspend fun getPlan(key : String) : DataFirebaseCallModel
+    suspend fun getAllIncomeAndExpenses(planId : String) : DataFirebaseCallModel
 
 }
