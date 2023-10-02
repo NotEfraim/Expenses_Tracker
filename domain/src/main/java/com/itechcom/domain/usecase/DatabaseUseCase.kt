@@ -1,6 +1,5 @@
 package com.itechcom.domain.usecase
 
-import android.util.Log
 import com.itechcom.data.repository.firebase.DatabaseRepository
 import com.itechcom.data.storage.firebase.database.entity.DataPlanEntity
 import com.itechcom.data.storage.firebase.database.entity.DataPlanEntityList
@@ -17,15 +16,12 @@ import com.itechcom.domain.model.database.UserEntity
 import javax.inject.Inject
 
 class DatabaseUseCase @Inject constructor(
-    private val databaseRepository: DatabaseRepository
+    private val databaseRepository: DatabaseRepository,
 ) {
-    suspend fun addPlan(planEntity: PlanEntity) : FirebaseCallModel {
-        val response = databaseRepository.addPlan(
+    suspend fun addPlan(planEntity: PlanEntity): FirebaseCallModel {
+        return databaseRepository.addPlan(
             planEntity.mapToDataPlanEntity()
         ).mapToFirebaseCallModel()
-        val planResponseEntity = response.data as DataPlanEntity?
-        response.data = planResponseEntity?.mapToPlanEntity()
-        return response
     }
 
     suspend fun addIncomeExpensesEntity(incomeExpensesEntity: IncomeExpensesEntity) =

@@ -10,6 +10,7 @@ import com.itechcom.domain.model.database.UserEntity
 fun PlanEntity.mapToDataPlanEntity() : DataPlanEntity {
     return DataPlanEntity(
         planId,
+        userName,
         stringDate,
         budget,
         totalIncome,
@@ -23,5 +24,5 @@ fun UserEntity.mapToDataUserEntity() : DataUserEntity {
 }
 
 fun IncomeExpensesEntity.mapToIncomeExpensesEntity() : DataIncomeExpensesEntity {
-    return DataIncomeExpensesEntity(id, planId, category, name, amount, stringDate, description)
+    return DataIncomeExpensesEntity(id, planId, type, name, amount, stringDate, description)
 }

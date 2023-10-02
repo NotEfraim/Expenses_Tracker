@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.itechcom.domain.model.database.PlanEntity
 import com.itechcom.domain.model.database.PlanEntityList
 import com.itechcom.expensestracker.R
@@ -25,10 +26,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
 
     private val budgetPlanAdapter = BudgetPlanAdapter()
 
-    override fun HomeViewModel.initCall() {
+    override fun onResume() {
+        super.onResume()
         lifecycleScope.launch {
-            getAllPlans(10)
-            getLatestPlan()
+            viewModel.getAllPlans(10)
+            viewModel.getLatestPlan()
         }
     }
 
@@ -46,23 +48,29 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
     }
 
     @SuppressLint("SetTextI18n")
-    private fun getLatestPlan(data : PlanEntity) = binding.apply {
-        initBanner()
+    private fun getLatestPlan(data : PlanEntity?) = binding.apply {
+
+        if(data?.budget == null) {
+            initBanner(true)
+            return@apply
+        }
+
+        initBanner(false)
         planDate.text = data.stringDate
         planAmount.text = "${data.budget?:"0"}.00"
         expensesAmount.text = data.totalExpenses?:"₱0.00"
         incomeAmount.text = data.totalIncome?:"₱0.00"
     }
 
-    private fun initPlansData(data: PlanEntityList) {
-        if(isFirstCall){
-            isFirstCall = false
+    private fun initPlansData(data: PlanEntityList?) {
+        budgetPlanAdapter.submitList(data?.data)
+        budgetPlanAdapter.useEmptyView()
+        if(data?.data == null){
+            hideLoadingDialog()
+            budgetPlanAdapter.useEmptyView()
             return
         }
-        budgetPlanAdapter.submitList(data.data)
-        budgetPlanAdapter.useEmptyView()
         hideLoadingDialog()
-
         budgetPlanAdapter.setOnItemClickListener { _, view, position ->
             val bundle = Bundle()
             val adapterData = data.data?.get(position)
@@ -75,10 +83,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
         planRecycler.adapter = budgetPlanAdapter
     }
 
-    private fun initBanner() = binding.apply {
-        bannerContainer.visibility = View.VISIBLE
-        noPlanLottie.visibility = View.GONE
-        noPlanText.visibility = View.GONE
+    private fun initBanner(hide : Boolean) = binding.apply {
+        if(hide){
+            bannerContainer.visibility = View.GONE
+            noPlanLottie.visibility = View.VISIBLE
+            noPlanText.visibility = View.VISIBLE
+        }else{
+            bannerContainer.visibility = View.VISIBLE
+            noPlanLottie.visibility = View.GONE
+            noPlanText.visibility = View.GONE
+        }
+
     }
 
     override fun onClick(v: View?) {

@@ -1,6 +1,5 @@
 package com.itechcom.domain.mapper
 
-import android.util.Log
 import com.itechcom.data.model.DataSignInResults
 import com.itechcom.data.model.DataUserData
 import com.itechcom.data.storage.firebase.database.entity.DataIncomeExpensesEntity
@@ -14,7 +13,6 @@ import com.itechcom.domain.model.database.PlanEntity
 import com.itechcom.domain.model.database.PlanEntityList
 import com.itechcom.domain.model.database.UserEntity
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 
 
@@ -56,6 +54,7 @@ fun List<DataPlanEntity>.mapToListPlanEntity() : List<PlanEntity>{
     this.map {
         model.add(PlanEntity(
             stringDate = it.stringDate,
+            userName = it.userName,
             budget = it.budget,
             totalIncome = it.totalIncome,
             totalExpenses = it.totalExpenses,
@@ -66,7 +65,15 @@ fun List<DataPlanEntity>.mapToListPlanEntity() : List<PlanEntity>{
 }
 
 fun DataPlanEntity.mapToPlanEntity() : PlanEntity {
-    return PlanEntity(planId, stringDate, budget, totalIncome, totalExpenses, description)
+    return PlanEntity(
+        planId,
+        userName,
+        stringDate,
+        budget,
+        totalIncome,
+        totalExpenses,
+        description
+    )
 }
 
 fun DataUserEntity.mapToUserDataEntity() : UserEntity {
@@ -74,5 +81,5 @@ fun DataUserEntity.mapToUserDataEntity() : UserEntity {
 }
 
 fun DataIncomeExpensesEntity.mapToDataIncomeExpensesEntity() : IncomeExpensesEntity{
-    return IncomeExpensesEntity(id, planId, category, name, amount, stringDate, description)
+    return IncomeExpensesEntity(id, planId, type, name, amount, stringDate, description)
 }

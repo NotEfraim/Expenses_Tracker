@@ -8,6 +8,8 @@ data class DataPlanEntity(
     @get:Exclude
     @SerializedName("planId")
     var planId : String? = null,
+    @SerializedName("userName")
+    var userName : String? = null,
     @SerializedName("stringDate")
     var stringDate : String? = null,
     @SerializedName("budget")

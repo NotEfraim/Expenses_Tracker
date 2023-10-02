@@ -6,6 +6,8 @@ import java.io.Serializable
 class PlanEntity(
     @SerializedName("planId")
     var planId : String? = null,
+    @SerializedName("userName")
+    val userName : String? = null,
     @SerializedName("stringDate")
     var stringDate : String? = null,
     @SerializedName("budget")

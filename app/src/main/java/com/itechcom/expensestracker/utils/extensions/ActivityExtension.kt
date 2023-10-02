@@ -1,24 +1,26 @@
 package com.itechcom.expensestracker.utils.extensions
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
-import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.google.android.material.snackbar.Snackbar
 import com.itechcom.expensestracker.R
+import dagger.hilt.android.internal.managers.ViewComponentManager
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -69,22 +71,41 @@ fun <T: Any>LifecycleOwner.collect(data: SharedFlow<T?>, function: (T) -> Unit) 
 }
 
 fun View.navigateTo(into : Int, bundle: Bundle? = null){
-    Navigation.findNavController(this).navigate(into, bundle)
+    findNavController().navigate(into, bundle)
 }
 
-fun AppCompatTextView.showDatePicker() {
+fun View.getNavController(): NavController {
+    val activity = if(context is ViewComponentManager.FragmentContextWrapper)
+        ((context as ViewComponentManager.FragmentContextWrapper).baseContext as Activity)
+    else context as Activity
+    return Navigation.findNavController(activity, R.id.fragmentContainer)
+}
+
+@SuppressLint("SimpleDateFormat")
+fun AppCompatTextView.showDatePicker(
+    min: Long? = null,
+    onSelectedFunc: ((year : Int, month : Int, day : Int) -> Unit)? = null
+) {
     val calendar = Calendar.getInstance()
     val year = calendar.get(Calendar.YEAR)
     val month = calendar.get(Calendar.MONTH)
     val day = calendar.get(Calendar.DAY_OF_MONTH)
 
+
     val datePickerDialog = DatePickerDialog(this.context, {
         _, selectedYear, selectedMonth, selectedDay ->
         this.text = formatDate(selectedYear, selectedMonth, selectedDay)
-
+        onSelectedFunc?.invoke(selectedYear, selectedMonth, selectedDay)
     },year, month, day)
 
+    datePickerDialog.datePicker.minDate = min ?: System.currentTimeMillis()
     datePickerDialog.show()
+}
+
+fun Activity.createSnackBar(msg: String, onclickFunc :() -> Unit){
+    val view = this.findViewById<View>(android.R.id.content)
+    Snackbar.make(view, msg, Snackbar.LENGTH_SHORT).setAction("OK"
+    ) { onclickFunc.invoke() }.show()
 }
 
 private fun formatDate(year: Int, month: Int, day: Int): String {

@@ -45,7 +45,8 @@ class ComponentsModule {
 
     @Provides
     @Singleton
-    fun providesFirebaseDatabaseManager() = FirebaseDatabaseManager()
+    fun providesFirebaseDatabaseManager(sharedPrefManager: SharedPrefManager)
+    = FirebaseDatabaseManager(sharedPrefManager)
 
     @Provides
     @Singleton
