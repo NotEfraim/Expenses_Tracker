@@ -47,7 +47,7 @@ class AddExpensesFragment : BaseFragment<FragmentAddExpensesBinding, AddIncomeEx
                 )
                 val result = viewModel.addIncome(entity)
                 if(result) {
-                    delay(2000)
+                    delay(1000)
                     hideLoadingDialog()
                     this@AddExpensesFragment.findNavController().popBackStack()
                 }

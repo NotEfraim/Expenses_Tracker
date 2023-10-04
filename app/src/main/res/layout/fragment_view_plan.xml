@@ -199,7 +199,7 @@
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:progressDrawable="@drawable/progress_income"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -216,6 +216,16 @@
                 android:textSize="11sp"
                 app:layout_constraintStart_toStartOf="@+id/incomeProgress"
                 app:layout_constraintTop_toTopOf="@+id/incomeProgress" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/totalIncomeLeftText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_3F6D83"
+                android:textSize="11sp"
+                app:layout_constraintBottom_toTopOf="@+id/incomeProgress"
+                app:layout_constraintEnd_toEndOf="@+id/incomeProgress" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

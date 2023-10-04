@@ -33,10 +33,9 @@ class ViewPlanFragment : BaseFragment<FragmentViewPlanBinding, ViewPlanViewModel
         super.onResume()
         getBundleExtras()
         lifecycleScope.launch {
-            showLoadingDialog()
             val key = planId?:return@launch
-            viewModel.getPlan(key)
             viewModel.getIncomeExpenses(key)
+            viewModel.getPlan(key)
         }
     }
 
@@ -74,8 +73,8 @@ class ViewPlanFragment : BaseFragment<FragmentViewPlanBinding, ViewPlanViewModel
 
     @SuppressLint("SetTextI18n")
     private fun initData(model : PlanEntity) = binding.apply {
-        val expenses = model.totalExpenses?.toInt()?:0
-        val income = model.totalIncome?.toInt()?:0
+        val expenses = incomeExpenseAdapter.getTotalExpenses()
+        val income = incomeExpenseAdapter.getTotalIncome()
         val budget = model.budget?.toInt()?:0
         val totalLeft = (budget - expenses) + income
         val budgetIncome = budget + income
@@ -90,7 +89,8 @@ class ViewPlanFragment : BaseFragment<FragmentViewPlanBinding, ViewPlanViewModel
         expensesLeftText.text = "₱$budget.00"
         expensesText.text =  "₱$expenses.00 of ₱$budget.00"
 
-        incomeText.text = "₱$expenses.00 of ₱$budgetIncome.00"
+        totalIncomeLeftText.text = "Total Income + Budget ₱$budgetIncome.00"
+        incomeText.text = "₱$income.00 of ₱$budget.00 budget"
         incomeProgress.max = budget
         incomeProgress.progress = income
 
@@ -132,6 +132,11 @@ class ViewPlanFragment : BaseFragment<FragmentViewPlanBinding, ViewPlanViewModel
                 }
             }
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        incomeExpenseAdapter.clearAmounts()
     }
 
     override fun onDetach() {
