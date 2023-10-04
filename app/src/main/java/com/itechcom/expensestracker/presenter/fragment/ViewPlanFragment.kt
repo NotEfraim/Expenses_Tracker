@@ -29,12 +29,14 @@ class ViewPlanFragment : BaseFragment<FragmentViewPlanBinding, ViewPlanViewModel
     private val incomeExpenseAdapter = IncomeExpenseAdapter()
     private var planId : String? = null
 
-    override fun ViewPlanViewModel.initCall() {
+    override fun onResume() {
+        super.onResume()
         getBundleExtras()
         lifecycleScope.launch {
+            showLoadingDialog()
             val key = planId?:return@launch
-            getPlan(key)
-            getIncomeExpenses(key)
+            viewModel.getPlan(key)
+            viewModel.getIncomeExpenses(key)
         }
     }
 
@@ -48,7 +50,6 @@ class ViewPlanFragment : BaseFragment<FragmentViewPlanBinding, ViewPlanViewModel
     }
 
     private fun initViews() = binding.apply {
-        showLoadingDialog()
         expensesIncomeRecycler.adapter = incomeExpenseAdapter
         initClicks()
     }
@@ -119,7 +120,7 @@ class ViewPlanFragment : BaseFragment<FragmentViewPlanBinding, ViewPlanViewModel
                 }
 
                 addExpensesBtn.id -> {
-                    v.navigateTo(R.id.actionToAddExpensesFragment)
+                    v.navigateTo(R.id.actionToAddExpensesFragment, bundle)
                 }
 
                 addIncomeBtn.id -> {

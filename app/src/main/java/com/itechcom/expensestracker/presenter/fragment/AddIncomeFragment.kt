@@ -6,16 +6,17 @@ import androidx.navigation.fragment.findNavController
 import com.itechcom.domain.model.database.IncomeExpensesEntity
 import com.itechcom.expensestracker.base.BaseFragment
 import com.itechcom.expensestracker.databinding.FragmentAddIncomeBinding
-import com.itechcom.expensestracker.presenter.viewmodel.AddIncomeViewModel
+import com.itechcom.expensestracker.presenter.viewmodel.AddIncomeExpensesViewModel
 import com.itechcom.expensestracker.utils.extensions.createSnackBar
 import com.itechcom.expensestracker.utils.extensions.showDatePicker
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class AddIncomeFragment : BaseFragment<FragmentAddIncomeBinding, AddIncomeViewModel>(
+class AddIncomeFragment : BaseFragment<FragmentAddIncomeBinding, AddIncomeExpensesViewModel>(
     FragmentAddIncomeBinding::inflate,
-    AddIncomeViewModel::class) {
+    AddIncomeExpensesViewModel::class) {
 
     private var planId : String? = null
     override fun FragmentAddIncomeBinding.initialize() {
@@ -32,7 +33,7 @@ class AddIncomeFragment : BaseFragment<FragmentAddIncomeBinding, AddIncomeViewMo
 
         saveBtn.setOnClickListener {
             lifecycleScope.launch {
-
+                showLoadingDialog()
                 if(source.text.isNullOrEmpty() || amount.text.isNullOrEmpty() || selectDate.text.isNullOrEmpty()){
                     requireActivity().createSnackBar("All Field is required"){}
                     return@launch
@@ -47,7 +48,11 @@ class AddIncomeFragment : BaseFragment<FragmentAddIncomeBinding, AddIncomeViewMo
                     description = "${description.text}"
                 )
                 val result = viewModel.addIncome(entity)
-                if(result) this@AddIncomeFragment.findNavController().popBackStack()
+                if(result) {
+                    delay(2000)
+                    hideLoadingDialog()
+                    this@AddIncomeFragment.findNavController().popBackStack()
+                }
             }
         }
     }

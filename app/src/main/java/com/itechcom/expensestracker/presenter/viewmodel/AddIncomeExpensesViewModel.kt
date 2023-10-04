@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class AddIncomeViewModel @Inject constructor(
+class AddIncomeExpensesViewModel @Inject constructor(
     private val databaseUseCase: DatabaseUseCase
 ): ViewModel() {
 
