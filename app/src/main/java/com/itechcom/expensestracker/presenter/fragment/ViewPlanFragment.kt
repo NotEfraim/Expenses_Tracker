@@ -1,19 +1,14 @@
 package com.itechcom.expensestracker.presenter.fragment
 
 import android.annotation.SuppressLint
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.lifecycleScope
-import com.itechcom.domain.model.database.IncomeExpensesEntity
 import com.itechcom.domain.model.database.IncomeExpensesEntityList
 import com.itechcom.domain.model.database.PlanEntity
 import com.itechcom.expensestracker.R
 import com.itechcom.expensestracker.base.BaseFragment
 import com.itechcom.expensestracker.databinding.FragmentViewPlanBinding
-import com.itechcom.expensestracker.presenter.viewmodel.MainViewModel
 import com.itechcom.expensestracker.presenter.adapter.IncomeExpenseAdapter
 import com.itechcom.expensestracker.presenter.viewmodel.ViewPlanViewModel
 import com.itechcom.expensestracker.utils.extensions.collect
@@ -30,6 +25,7 @@ class ViewPlanFragment : BaseFragment<FragmentViewPlanBinding, ViewPlanViewModel
     private val incomeExpenseAdapter = IncomeExpenseAdapter()
     private var planId : String? = null
     private var modelHolder : IncomeExpensesEntityList? = null
+    private var planHolder : PlanEntity? = null
 
     override fun onResume() {
         super.onResume()
@@ -76,6 +72,7 @@ class ViewPlanFragment : BaseFragment<FragmentViewPlanBinding, ViewPlanViewModel
 
     @SuppressLint("SetTextI18n")
     private fun initData(model : PlanEntity) = binding.apply {
+        planHolder = model
         var expenses = 0
         var income = 0
 
@@ -84,6 +81,14 @@ class ViewPlanFragment : BaseFragment<FragmentViewPlanBinding, ViewPlanViewModel
                 income += it.amount?:0
             }else{
                 expenses += it.amount?:0
+            }
+        }
+
+        if(model.totalExpenses?.toInt() != expenses || model.totalIncome?.toInt() != income) {
+            lifecycleScope.launch {
+                model.totalExpenses = expenses.toString()
+                model.totalIncome = income.toString()
+                viewModel.updatePlan(planId ?: return@launch, model)
             }
         }
 
@@ -134,7 +139,8 @@ class ViewPlanFragment : BaseFragment<FragmentViewPlanBinding, ViewPlanViewModel
         binding.apply {
             when(v?.id){
                 editPlanBtn.id -> {
-                    v.navigateTo(R.id.actionToEditPlanFragment)
+                    bundle.putSerializable("plan_model", planHolder)
+                    v.navigateTo(R.id.actionToEditPlanFragment, bundle)
                 }
 
                 addExpensesBtn.id -> {

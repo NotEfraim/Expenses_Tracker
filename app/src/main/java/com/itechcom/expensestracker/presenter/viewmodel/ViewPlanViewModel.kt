@@ -43,6 +43,11 @@ class ViewPlanViewModel @Inject constructor(
         else _errorMessage.value = response.errorMessage?:return
     }
 
+    suspend fun updatePlan(key: String, planEntity: PlanEntity) : Boolean {
+        val response = databaseUseCase.updatePlan(key, planEntity)
+        return response.isSuccess
+    }
+
     fun clearStates(){
         _plan.value = PlanEntity()
         _incomeExpenses.value = IncomeExpensesEntityList()
