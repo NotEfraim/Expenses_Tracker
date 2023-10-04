@@ -1,6 +1,7 @@
 package com.itechcom.domain.model.database
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 
 data class IncomeExpensesEntity(
@@ -18,10 +19,10 @@ data class IncomeExpensesEntity(
     var stringDate : String? = null,
     @SerializedName("description")
     var description : String? = null
-)
+) : Serializable
 
 data class IncomeExpensesEntityList(
     @SerializedName("data")
     var data : List<IncomeExpensesEntity>? = null
-)
+) : Serializable
 

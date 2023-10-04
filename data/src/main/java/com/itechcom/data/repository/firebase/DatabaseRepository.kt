@@ -15,5 +15,8 @@ interface DatabaseRepository {
     suspend fun getLatestPlan() : DataFirebaseCallModel
     suspend fun getPlan(key : String) : DataFirebaseCallModel
     suspend fun getAllIncomeAndExpenses(planId : String) : DataFirebaseCallModel
+    suspend fun updatePlan(key : String,incomeExpensesEntity: DataPlanEntity) : DataFirebaseCallModel
+    suspend fun editIncomeAndExpenses(key : String, entity : DataIncomeExpensesEntity) : DataFirebaseCallModel
+    suspend fun deletePlan(key: String) : DataFirebaseCallModel
 
 }

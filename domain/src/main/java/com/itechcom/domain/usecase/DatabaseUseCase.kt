@@ -1,6 +1,7 @@
 package com.itechcom.domain.usecase
 
 import com.itechcom.data.repository.firebase.DatabaseRepository
+import com.itechcom.data.storage.firebase.database.entity.DataIncomeExpensesEntity
 import com.itechcom.data.storage.firebase.database.entity.DataIncomeExpensesEntityList
 import com.itechcom.data.storage.firebase.database.entity.DataPlanEntity
 import com.itechcom.data.storage.firebase.database.entity.DataPlanEntityList
@@ -87,6 +88,27 @@ class DatabaseUseCase @Inject constructor(
         }else{
             response.mapToFirebaseCallModel()
         }
+    }
+
+    suspend fun updatePlan(
+        key: String,
+        incomeExpensesEntity: PlanEntity
+    ) : FirebaseCallModel {
+        val response = databaseRepository.updatePlan(key, incomeExpensesEntity.mapToDataPlanEntity())
+        return response.mapToFirebaseCallModel()
+    }
+
+    suspend fun editIncomeAndExpenses(
+        key: String,
+        entity: IncomeExpensesEntity
+    ) : FirebaseCallModel {
+        val response = databaseRepository.editIncomeAndExpenses(key, entity.mapToIncomeExpensesEntity())
+        return response.mapToFirebaseCallModel()
+    }
+
+    suspend fun deletePlan(key: String) : FirebaseCallModel{
+        val response = databaseRepository.deletePlan(key)
+        return response.mapToFirebaseCallModel()
     }
 
 

@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.lifecycleScope
+import com.itechcom.domain.model.database.IncomeExpensesEntity
 import com.itechcom.domain.model.database.IncomeExpensesEntityList
 import com.itechcom.domain.model.database.PlanEntity
 import com.itechcom.expensestracker.R
@@ -28,6 +29,7 @@ class ViewPlanFragment : BaseFragment<FragmentViewPlanBinding, ViewPlanViewModel
 
     private val incomeExpenseAdapter = IncomeExpenseAdapter()
     private var planId : String? = null
+    private var modelHolder : IncomeExpensesEntityList? = null
 
     override fun onResume() {
         super.onResume()
@@ -59,13 +61,14 @@ class ViewPlanFragment : BaseFragment<FragmentViewPlanBinding, ViewPlanViewModel
     }
 
     private fun initIncomeExpenses(data : IncomeExpensesEntityList?){
-        if(data?.data == null) {
+        if(data?.data == null || data.data == incomeExpenseAdapter.items) {
             lifecycleScope.launch {
                 delay(2000)
                 hideLoadingDialog()
             }
             return
         }
+        modelHolder = data
         incomeExpenseAdapter.submitList(data.data)
         incomeExpenseAdapter.useEmptyView()
         hideLoadingDialog()
@@ -73,8 +76,17 @@ class ViewPlanFragment : BaseFragment<FragmentViewPlanBinding, ViewPlanViewModel
 
     @SuppressLint("SetTextI18n")
     private fun initData(model : PlanEntity) = binding.apply {
-        val expenses = incomeExpenseAdapter.getTotalExpenses()
-        val income = incomeExpenseAdapter.getTotalIncome()
+        var expenses = 0
+        var income = 0
+
+        modelHolder?.data?.map {
+            if(it.type == "income"){
+                income += it.amount?:0
+            }else{
+                expenses += it.amount?:0
+            }
+        }
+
         val budget = model.budget?.toInt()?:0
         val totalLeft = (budget - expenses) + income
         val budgetIncome = budget + income
@@ -95,6 +107,18 @@ class ViewPlanFragment : BaseFragment<FragmentViewPlanBinding, ViewPlanViewModel
         incomeProgress.progress = income
 
         planDate.text = model.stringDate
+
+        incomeExpenseAdapter.setOnItemClickListener{ item, v, position ->
+            val bundle = Bundle()
+            bundle.putString("plan_id", planId)
+            bundle.putSerializable("plan_model", model)
+            bundle.putSerializable("incomeExpenses_model", item.getItem(position))
+            if(item.getItem(position)?.type == "income"){
+                v.navigateTo(R.id.actionToEditIncome, bundle)
+            }else{
+                v.navigateTo(R.id.actionToEditExpenses, bundle)
+            }
+        }
     }
 
     private fun initClicks() = binding.apply {
@@ -102,12 +126,6 @@ class ViewPlanFragment : BaseFragment<FragmentViewPlanBinding, ViewPlanViewModel
         addExpensesBtn.setOnClickListener(::onClick)
         addIncomeBtn.setOnClickListener(::onClick)
         moreBtn.setOnClickListener(::onClick)
-
-        incomeExpenseAdapter.setOnItemClickListener{ _, v, _ ->
-            v.navigateTo(R.id.actionToEditIncome)
-        }
-
-
     }
 
     override fun onClick(v: View?) {
@@ -132,11 +150,6 @@ class ViewPlanFragment : BaseFragment<FragmentViewPlanBinding, ViewPlanViewModel
                 }
             }
         }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        incomeExpenseAdapter.clearAmounts()
     }
 
     override fun onDetach() {

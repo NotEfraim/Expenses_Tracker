@@ -6,15 +6,15 @@ import androidx.navigation.fragment.findNavController
 import com.itechcom.domain.model.database.IncomeExpensesEntity
 import com.itechcom.expensestracker.base.BaseFragment
 import com.itechcom.expensestracker.databinding.FragmentAddExpensesBinding
-import com.itechcom.expensestracker.presenter.viewmodel.AddIncomeExpensesViewModel
+import com.itechcom.expensestracker.presenter.viewmodel.IncomeExpensesViewModel
 import com.itechcom.expensestracker.utils.extensions.createSnackBar
 import com.itechcom.expensestracker.utils.extensions.showDatePicker
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class AddExpensesFragment : BaseFragment<FragmentAddExpensesBinding, AddIncomeExpensesViewModel>(
+class AddExpensesFragment : BaseFragment<FragmentAddExpensesBinding, IncomeExpensesViewModel>(
     FragmentAddExpensesBinding::inflate,
-    AddIncomeExpensesViewModel::class) {
+    IncomeExpensesViewModel::class) {
 
     private var planId : String? = null
     override fun FragmentAddExpensesBinding.initialize() {
@@ -45,7 +45,7 @@ class AddExpensesFragment : BaseFragment<FragmentAddExpensesBinding, AddIncomeEx
                     stringDate = "${selectDate.text}",
                     description = "${description.text}"
                 )
-                val result = viewModel.addIncome(entity)
+                val result = viewModel.addIncomeExpenses(entity)
                 if(result) {
                     delay(1000)
                     hideLoadingDialog()

@@ -23,25 +23,17 @@ class IncomeExpenseAdapter : BaseQuickAdapter<IncomeExpensesEntity, QuickViewHol
         item: IncomeExpensesEntity?
     ) {
 
+        holder.getView<TextView>(R.id.itemName).text = item?.name
+
         if(item?.type == "income"){
             holder.getView<ImageView>(R.id.startIcon).setImageResource(R.mipmap.income_circle_icon)
             holder.getView<TextView>(R.id.itemAmount).text = "+₱${item.amount}.00"
-            totalIncome += item.amount ?:0
         }
         else{
             holder.getView<ImageView>(R.id.startIcon).setImageResource(R.mipmap.expenses_circle_icon)
             holder.getView<TextView>(R.id.itemAmount).text = "-₱${item?.amount}.00"
-            totalExpenses += item?.amount ?:0
         }
 
-    }
-
-    fun getTotalIncome() = totalIncome
-    fun getTotalExpenses() = totalExpenses
-
-    fun clearAmounts(){
-        totalExpenses = 0
-        totalIncome = 0
     }
 
     override fun onCreateViewHolder(

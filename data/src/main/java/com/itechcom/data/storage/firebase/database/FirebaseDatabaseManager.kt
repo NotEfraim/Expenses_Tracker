@@ -9,6 +9,7 @@ import com.itechcom.data.storage.firebase.database.entity.DataPlanEntity
 import com.itechcom.data.storage.firebase.database.entity.DataPlanEntityList
 import com.itechcom.data.storage.firebase.database.entity.DataUserEntity
 import com.itechcom.data.storage.sharedpref.SharedPrefManager
+import com.itechcom.data.util.toMap
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import java.util.concurrent.CancellationException
@@ -170,6 +171,62 @@ class FirebaseDatabaseManager @Inject constructor(
 
         }catch (e : Exception){
             Log.d("queryMe", "${e.message}")
+            if(e is CancellationException) throw e
+            DataFirebaseCallModel(false, null, "${e.message}")
+        }
+    }
+
+    suspend fun updatePlan(key : String, entity: DataPlanEntity) : DataFirebaseCallModel {
+        val updateData = entity.toMap()
+        val query = plansTable.child(key).updateChildren(updateData)
+        query.await()
+        return try {
+            Log.d("updateBEBE", "updatePlan ${query}")
+                DataFirebaseCallModel(true, null, null)
+        }catch (e : Exception){
+            Log.d("updateBEBE", "updatePlan ${e.message}")
+            DataFirebaseCallModel(false, null, e.message)
+        }
+    }
+
+    suspend fun editIncomeAndExpenses(key : String, entity : DataIncomeExpensesEntity) : DataFirebaseCallModel {
+        val updateData = entity.toMap()
+        return try {
+            val query = incomeExpensesTable.child(key).updateChildren(updateData)
+            query.await()
+            Log.d("updateBEBE", "editIncomeAndExpenses ${query}")
+            DataFirebaseCallModel(true, null, null)
+        }catch (e : Exception){
+            Log.d("updateBEBE", "editIncomeAndExpenses ${e.message}")
+            DataFirebaseCallModel(false, null, e.message)
+        }
+    }
+
+    suspend fun deletePlan(key: String) : DataFirebaseCallModel {
+        return try {
+            plansTable.child(key).removeValue().await()
+            deleteAllIncomeExpensesByKey(key)
+        }catch (e : Exception){
+            DataFirebaseCallModel(false, null, e.message)
+        }
+    }
+
+    private suspend fun deleteAllIncomeExpensesByKey(planId: String) : DataFirebaseCallModel{
+        return try {
+            val query = incomeExpensesTable
+                .orderByChild("planId")
+                .equalTo(planId)
+                .get()
+                .await()
+            if(query.exists()){
+                query.children.map {
+                    incomeExpensesTable.child(it.key?:return@map ).removeValue().await()
+                }
+                DataFirebaseCallModel(true, null, null)
+            }
+            else DataFirebaseCallModel(true, null, "")
+
+        }catch (e : Exception){
             if(e is CancellationException) throw e
             DataFirebaseCallModel(false, null, "${e.message}")
         }

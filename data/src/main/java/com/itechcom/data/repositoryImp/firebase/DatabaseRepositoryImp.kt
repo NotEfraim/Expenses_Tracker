@@ -33,4 +33,16 @@ class DatabaseRepositoryImp @Inject constructor(
     override suspend fun getAllIncomeAndExpenses(planId: String)
     = firebaseDatabaseManager.getAllIncomeAndExpenses(planId)
 
+    override suspend fun updatePlan(
+        key: String,
+        incomeExpensesEntity: DataPlanEntity
+    ) = firebaseDatabaseManager.updatePlan(key, incomeExpensesEntity)
+
+    override suspend fun editIncomeAndExpenses(
+        key: String,
+        entity: DataIncomeExpensesEntity
+    ) = firebaseDatabaseManager.editIncomeAndExpenses(key, entity)
+
+    override suspend fun deletePlan(key: String) = firebaseDatabaseManager.deletePlan(key)
+
 }
