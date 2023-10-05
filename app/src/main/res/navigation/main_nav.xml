@@ -20,7 +20,7 @@
         <action
             android:id="@+id/action_homeFragment_to_addPlanFragment"
             app:destination="@id/addPlanFragment" />
-    </fragment>
+     </fragment>
 
     <fragment
         android:id="@+id/fragmentAllPlans"

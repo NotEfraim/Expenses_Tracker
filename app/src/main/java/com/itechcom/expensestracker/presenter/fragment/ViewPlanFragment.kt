@@ -103,7 +103,7 @@ class ViewPlanFragment : BaseFragment<FragmentViewPlanBinding, ViewPlanViewModel
 
         expensesProgress.max = budget
         expensesProgress.progress = expenses
-        expensesLeftText.text = "₱$budget.00"
+        expensesLeftText.text = "₱${budget - expenses}.00"
         expensesText.text =  "₱$expenses.00 of ₱$budget.00"
 
         totalIncomeLeftText.text = "Total Income + Budget ₱$budgetIncome.00"
@@ -152,7 +152,8 @@ class ViewPlanFragment : BaseFragment<FragmentViewPlanBinding, ViewPlanViewModel
                 }
 
                 moreBtn.id -> {
-                    v.navigateTo(R.id.action_viewPlanFragment_to_allExpensesIncomeFragment2)
+                    bundle.putSerializable("plan_model", planHolder)
+                    v.navigateTo(R.id.action_viewPlanFragment_to_allExpensesIncomeFragment2, bundle)
                 }
             }
         }
