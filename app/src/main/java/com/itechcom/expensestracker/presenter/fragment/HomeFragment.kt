@@ -59,8 +59,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
         initBanner(false)
         planDate.text = data.stringDate
         planAmount.text = "${data.budget?:"0"}.00"
-        expensesAmount.text = if(data.totalExpenses == null) "₱0.00" else "₱${data.totalExpenses}.00"
-        incomeAmount.text = if(data.totalIncome == null) "₱0.00" else "₱${data.totalIncome}.00"
+        expensesAmount.text = if(data.totalExpenses == null) "0.00" else "${data.totalExpenses}.00"
+        incomeAmount.text = if(data.totalIncome == null) "0.00" else "${data.totalIncome}.00"
     }
 
     private fun initPlansData(data: PlanEntityList?) {

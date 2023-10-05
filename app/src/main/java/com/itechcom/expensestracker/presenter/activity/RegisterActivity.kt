@@ -53,7 +53,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
                     userPassword = password
                 ))
                 if(res){
-                    saveEmailToPref(Constants.PREF_EMAIL, email)
+                    saveEmailToPref(Constants.PREF_EMAIL, email.lowercase())
                     saveLoginType(Constants.LOGIN_TYPE, LoginType.BASIC.name)
                     hideLoadingDialog()
                     delay(1000)

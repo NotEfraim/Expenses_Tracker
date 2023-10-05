@@ -1,5 +1,6 @@
 package com.itechcom.expensestracker.presenter.activity
 
+import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import com.itechcom.expensestracker.base.BaseActivity
 import com.itechcom.expensestracker.databinding.ActivityMainBinding
@@ -18,7 +19,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
 
     override fun MainViewModel.initCall() {
         lifecycleScope.launch {
-
         }
     }
 

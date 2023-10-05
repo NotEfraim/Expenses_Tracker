@@ -68,9 +68,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(
             lifecycleScope.launch {
                 val result = loginViaEmailAndPassword(email, password)
                 if(!result.isSuccess){
-                    toastUtil("${result.errorMessage}")
+                    hideLoadingDialog()
+                    toastUtil("Email or password is incorrect.")
                 }else{
-                    saveEmailToPref(Constants.PREF_EMAIL, email)
+                    saveEmailToPref(Constants.PREF_EMAIL, email.lowercase())
                     saveLoginType(Constants.LOGIN_TYPE, LoginType.BASIC.name)
                 }
             }
@@ -91,8 +92,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(
 
     private fun onLoginResult(result : SignInResults){}
 
-    private fun errorToaster(e : String){
-        if(e.isNotEmpty()) toastUtil(e)
+    private fun errorToaster(e : String?){
+        if(!e.isNullOrEmpty()) {
+            hideLoadingDialog()
+            toastUtil(e)
+        }
     }
 
 

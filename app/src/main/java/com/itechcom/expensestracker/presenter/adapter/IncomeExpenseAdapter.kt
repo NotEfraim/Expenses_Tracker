@@ -27,11 +27,11 @@ class IncomeExpenseAdapter : BaseQuickAdapter<IncomeExpensesEntity, QuickViewHol
 
         if(item?.type == "income"){
             holder.getView<ImageView>(R.id.startIcon).setImageResource(R.mipmap.income_circle_icon)
-            holder.getView<TextView>(R.id.itemAmount).text = "+₱${item.amount}.00"
+            holder.getView<TextView>(R.id.itemAmount).text = "+${item.amount}.00"
         }
         else{
             holder.getView<ImageView>(R.id.startIcon).setImageResource(R.mipmap.expenses_circle_icon)
-            holder.getView<TextView>(R.id.itemAmount).text = "-₱${item?.amount}.00"
+            holder.getView<TextView>(R.id.itemAmount).text = "-${item?.amount}.00"
         }
 
     }

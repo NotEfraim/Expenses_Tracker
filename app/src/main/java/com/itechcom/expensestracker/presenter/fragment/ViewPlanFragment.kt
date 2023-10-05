@@ -98,16 +98,16 @@ class ViewPlanFragment : BaseFragment<FragmentViewPlanBinding, ViewPlanViewModel
 
         totalProgress.max = budget
         totalProgress.progress = expenses
-        totalLeftText.text = "₱$totalLeft.00"
-        totalText.text = "₱$expenses.00 of ₱$totalLeft.00"
+        totalLeftText.text = "$totalLeft.00"
+        totalText.text = "$expenses.00 of $totalLeft.00"
 
         expensesProgress.max = budget
         expensesProgress.progress = expenses
-        expensesLeftText.text = "₱${budget - expenses}.00"
-        expensesText.text =  "₱$expenses.00 of ₱$budget.00"
+        expensesLeftText.text = "${budget - expenses}.00"
+        expensesText.text =  "$expenses.00 of $budget.00"
 
-        totalIncomeLeftText.text = "Total Income + Budget ₱$budgetIncome.00"
-        incomeText.text = "₱$income.00 of ₱$budget.00 budget"
+        totalIncomeLeftText.text = "Total Income + Budget $budgetIncome.00"
+        incomeText.text = "$income.00 of $budget.00 budget"
         incomeProgress.max = budget
         incomeProgress.progress = income
 

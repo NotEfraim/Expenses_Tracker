@@ -69,7 +69,6 @@ class FirebaseDatabaseManager @Inject constructor(
 
             val query = usersTable.orderByChild("userName")
                 .equalTo(userEmail)
-                .limitToFirst(1)
                 .get()
                 .await()
 
@@ -77,7 +76,6 @@ class FirebaseDatabaseManager @Inject constructor(
                 val callResponse = query.children.first().getValue(DataUserEntity::class.java)
                 emit(DataFirebaseCallModel(true, callResponse, "" ))
             }
-
             else emit(DataFirebaseCallModel(false, null,"" ))
 
         }catch (e : Exception){

@@ -82,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
-                android:text="₱"
+                android:text=""
                 android:textColor="@color/color_465359"
                 android:textSize="22sp"
                 android:textStyle="bold" />

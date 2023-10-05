@@ -20,8 +20,8 @@ class BudgetPlanAdapter : BaseQuickAdapter<PlanEntity, QuickViewHolder>() {
             val budgetInt = budget?.toInt()?:0
 
             holder.getView<TextView>(R.id.planDate).text = stringDate
-            holder.getView<TextView>(R.id.costText).text = "₱$expensesInt.00 of ₱$budgetInt.00"
-            holder.getView<TextView>(R.id.remainingText).text = "₱${(budgetInt - expensesInt)}.00"
+            holder.getView<TextView>(R.id.costText).text = "$expensesInt.00 of $budgetInt.00"
+            holder.getView<TextView>(R.id.remainingText).text = "${(budgetInt - expensesInt)}.00"
 
             holder.getView<ProgressBar>(R.id.planProgress).apply {
                 max = budgetInt
