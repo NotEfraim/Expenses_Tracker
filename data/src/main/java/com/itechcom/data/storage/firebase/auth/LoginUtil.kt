@@ -1,5 +1,6 @@
 package com.itechcom.data.storage.firebase.auth
 
+import android.util.Log
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -19,15 +20,17 @@ class LoginUtil @Inject constructor(
         return user?.displayName
     }
 
-    suspend fun logoutUser(action: (() -> Unit?)? = null){
-        try {
+    suspend fun logoutUser(action: (() -> Unit?)? = null) : Boolean {
+        return try {
             action?.invoke()
-            oneTapSignClient.signOut().await()
+            oneTapSignClient.signOut()
             auth.signOut()
+            true
         }catch (e : Exception){
+            Log.d("logoutUser", "logoutUser: ${e.message}")
             if(e is CancellationException) throw e
+            false
         }
-
     }
 
     suspend fun getLoggedInUser() : DataUserData? = auth.currentUser?.run {

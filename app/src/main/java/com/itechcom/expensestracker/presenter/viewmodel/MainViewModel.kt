@@ -54,4 +54,7 @@ class MainViewModel @Inject constructor(
     suspend fun getSharedPrefEmail(key : String) = mainUseCase.getSavePrefEmail(key)
     suspend fun getLoginType(key : String) = mainUseCase.getLoginType(key)
 
+    suspend fun logoutUser(func :() -> Unit) = mainUseCase.logoutUser(func)
+
+
 }

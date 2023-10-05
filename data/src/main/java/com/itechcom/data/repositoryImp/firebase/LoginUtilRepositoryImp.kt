@@ -15,7 +15,7 @@ class LoginUtilRepositoryImp @Inject constructor(
         emit(loginUtil.getLoggedInUser())
     }
 
-    override suspend fun logoutUser(action: (() -> Unit?)?) {
+    override suspend fun logoutUser(action: (() -> Unit?)?) : Boolean {
         return loginUtil.logoutUser(action)
     }
 

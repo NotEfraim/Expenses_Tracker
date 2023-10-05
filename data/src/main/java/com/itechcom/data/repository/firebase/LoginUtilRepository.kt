@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 interface LoginUtilRepository {
 
     suspend fun getLoggedInUser() : Flow<DataUserData?>
-    suspend fun logoutUser(action: (() -> Unit?)? = null)
+    suspend fun logoutUser(action: (() -> Unit?)? = null) : Boolean
     fun validateUserIfLoggedIn() : String?
 
     fun onAuthChange(state : MutableStateFlow<Boolean>)

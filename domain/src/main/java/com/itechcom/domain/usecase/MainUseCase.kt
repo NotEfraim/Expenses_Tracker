@@ -17,6 +17,6 @@ class MainUseCase @Inject constructor(
 
     suspend fun getSavePrefEmail(key : String) = sharedPrefManager.getString(key)
     suspend fun getLoginType(key : String) = sharedPrefManager.getString(key)
-
     suspend fun getLoggedInUser() = loginUtilRepository.getLoggedInUser().userDataMap()
+    suspend fun logoutUser(func :() -> Unit) = loginUtilRepository.logoutUser(func)
 }

@@ -7,6 +7,8 @@ import com.itechcom.expensestracker.databinding.ActivityMainBinding
 import com.itechcom.expensestracker.presenter.viewmodel.MainViewModel
 import com.itechcom.expensestracker.utils.Constants
 import com.itechcom.expensestracker.utils.extensions.collect
+import com.itechcom.expensestracker.utils.extensions.intentTo
+import com.itechcom.expensestracker.utils.extensions.toastUtil
 import com.itechcom.expensestracker.utils.extensions.transparentStatusBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -29,6 +31,20 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
     override fun ActivityMainBinding.initialize() {
         transparentStatusBar()
         getUserName()
+
+        logoutBtn.setOnClickListener {
+            showLoadingDialog()
+            lifecycleScope.launch {
+                val response = viewModel.logoutUser {}
+                if(response){
+                    intentTo<LoginActivity> {  }
+                    finish()
+                }else{
+                    toastUtil("Unknown Error Occur!")
+                }
+                hideLoadingDialog()
+            }
+        }
     }
 
     private fun getUserName() = viewModel.apply {
